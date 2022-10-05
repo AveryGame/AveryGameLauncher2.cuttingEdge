@@ -54,7 +54,5 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         
         //End unique page logic
-
-        public MainWindow mw;
     }
 }

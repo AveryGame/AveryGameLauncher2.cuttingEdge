@@ -48,7 +48,5 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
             
         }
         //End unique page logic
-
-        public MainWindow mw;
     }
 }
