@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using static AgsLauncherV2.Optimized.Services.Enums;
 
-namespace AgsLauncherV2.Optimized.Pages
+namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>
     /// Interaction logic for Home.xaml
@@ -14,16 +14,18 @@ namespace AgsLauncherV2.Optimized.Pages
             InitializeComponent();
         }
 
+        
         // All NavButton logic
         private void Changelog(object sender, RoutedEventArgs e)
         {
-            Uncollapsed.Changelog changelog = new Uncollapsed.Changelog();
+            Changelog changelog = new Changelog();
             NavigationService.Navigate(changelog);
         }
         
         private void Bugs(object sender, RoutedEventArgs e)
         {
-
+            Bugs bugs = new Bugs();
+            NavigationService.Navigate(bugs);
         }
 
         private void News(object sender, RoutedEventArgs e)

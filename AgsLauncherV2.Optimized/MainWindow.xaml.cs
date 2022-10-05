@@ -27,10 +27,11 @@ namespace AgsLauncherV2.Optimized
             launcherStatus = LauncherStatus.initialized;
         }
 
+        
         // All NavButton logic
         private void Home(object sender, RoutedEventArgs e)
         {
-            Pages.Home home = new Pages.Home();
+            Pages.Uncollapsed.Home home = new Pages.Uncollapsed.Home();
             pageHost.NavigationService.Navigate(home);
             pageHost.Visibility = Visibility.Visible;
         }
@@ -44,7 +45,9 @@ namespace AgsLauncherV2.Optimized
 
         private void Bugs(object sender, RoutedEventArgs e)
         {
-
+            Pages.Uncollapsed.Bugs bugs = new Pages.Uncollapsed.Bugs();
+            pageHost.NavigationService.Navigate(bugs);
+            pageHost.Visibility = Visibility.Visible;
         }
 
         private void News(object sender, RoutedEventArgs e)

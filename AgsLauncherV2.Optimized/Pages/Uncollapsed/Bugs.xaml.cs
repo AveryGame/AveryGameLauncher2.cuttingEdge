@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>
-    /// Interaction logic for Changelog.xaml
+    /// Interaction logic for Bugs.xaml
     /// </summary>
-    public partial class Changelog : Page
+    public partial class Bugs : Page
     {
-        public Changelog()
+        public Bugs()
         {
             InitializeComponent();
         }
@@ -31,10 +31,10 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
             NavigationService.Navigate(home);
         }
 
-        private void Bugs(object sender, RoutedEventArgs e)
+        private void Changelog(object sender, RoutedEventArgs e)
         {
-            Bugs bugs = new Bugs();
-            NavigationService.Navigate(bugs);
+            Changelog changelog = new Changelog();
+            NavigationService.Navigate(changelog);
         }
 
         private void News(object sender, RoutedEventArgs e)
