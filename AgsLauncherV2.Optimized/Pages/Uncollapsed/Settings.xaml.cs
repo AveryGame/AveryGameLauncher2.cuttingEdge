@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -14,17 +15,23 @@ using System.Windows.Shapes;
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>
-    /// Interaction logic for Bugs.xaml
+    /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Bugs : Page
+    public partial class Settings : Page
     {
-        public Bugs()
+        public Settings()
         {
             InitializeComponent();
         }
 
-        
+
+
         // All NavButton logic
+        private void LegalNotice_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("explorer", "https://www.kianna.wtf/AveryGameLauncher2License");
+        }
+        
         private void Home(object sender, RoutedEventArgs e)
         {
             Home home = new Home();
@@ -37,16 +44,16 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
             NavigationService.Navigate(changelog);
         }
 
+        private void Bugs(object sender, RoutedEventArgs e)
+        {
+            Bugs bugs = new Bugs();
+            NavigationService.Navigate(bugs);
+        }
+
         private void News(object sender, RoutedEventArgs e)
         {
             News news = new News();
             NavigationService.Navigate(news);
-        }
-
-        private void Settings(object sender, RoutedEventArgs e)
-        {
-            Settings settings = new Settings();
-            NavigationService.Navigate(settings);
         }
         // End NavButton logic
 

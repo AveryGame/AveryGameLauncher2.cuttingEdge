@@ -36,7 +36,8 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 
         private void Settings(object sender, RoutedEventArgs e)
         {
-
+            Settings settings = new Settings();
+            NavigationService.Navigate(settings);
         }
         // End NavButton logic
         
