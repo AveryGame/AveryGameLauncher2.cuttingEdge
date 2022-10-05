@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="img\BugsButton.Icon.png" />
+    <None Remove="img\ChangelogButton.Icon.png" />
+    <None Remove="img\HomeButton.Icon.png" />
+    <None Remove="img\NewsButton.Icon.png" />
+    <None Remove="img\SettingsButton.Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\BugsButton.Icon.png" />
+    <Resource Include="img\ChangelogButton.Icon.png" />
+    <Resource Include="img\HomeButton.Icon.png" />
+    <Resource Include="img\NewsButton.Icon.png" />
+    <Resource Include="img\SettingsButton.Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Collapsed\" />
+  </ItemGroup>
+
+</Project>

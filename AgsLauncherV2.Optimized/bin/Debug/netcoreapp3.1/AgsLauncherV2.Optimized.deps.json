@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "AgsLauncherV2.Optimized/1.0.0": {
+        "runtime": {
+          "AgsLauncherV2.Optimized.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AgsLauncherV2.Optimized/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
