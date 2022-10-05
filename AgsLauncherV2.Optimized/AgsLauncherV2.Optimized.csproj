@@ -9,21 +9,29 @@
   <ItemGroup>
     <None Remove="img\BugsButton.Icon.png" />
     <None Remove="img\ChangelogButton.Icon.png" />
+    <None Remove="img\cuttingEdge-Load.gif" />
     <None Remove="img\HomeButton.Icon.png" />
     <None Remove="img\NewsButton.Icon.png" />
     <None Remove="img\SettingsButton.Icon.png" />
+    <None Remove="img\slate-blank.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="img\BugsButton.Icon.png" />
     <Resource Include="img\ChangelogButton.Icon.png" />
+    <Resource Include="img\cuttingEdge-Load.gif" />
     <Resource Include="img\HomeButton.Icon.png" />
     <Resource Include="img\NewsButton.Icon.png" />
     <Resource Include="img\SettingsButton.Icon.png" />
+    <Resource Include="img\slate-blank.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Pages\Collapsed\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="XamlAnimatedGif" Version="2.0.3" />
   </ItemGroup>
 
 </Project>

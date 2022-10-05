@@ -52,7 +52,9 @@ namespace AgsLauncherV2.Optimized
 
         private void News(object sender, RoutedEventArgs e)
         {
-
+            Pages.Uncollapsed.News news = new Pages.Uncollapsed.News();
+            pageHost.NavigationService.Navigate(news);
+            pageHost.Visibility = Visibility.Visible;
         }
 
         private void Settings(object sender, RoutedEventArgs e)

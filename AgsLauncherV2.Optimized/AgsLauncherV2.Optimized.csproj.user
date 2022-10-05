@@ -2,11 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Update="App.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Uncollapsed\Bugs.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -16,9 +14,15 @@
     <Compile Update="Pages\Uncollapsed\Home.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\Uncollapsed\News.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="App.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Uncollapsed\Bugs.xaml">
@@ -28,6 +32,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Uncollapsed\Home.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Uncollapsed\News.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

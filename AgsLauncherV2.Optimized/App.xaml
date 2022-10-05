@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:AgsLauncherV2.Optimized"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

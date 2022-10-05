@@ -39,7 +39,8 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 
         private void News(object sender, RoutedEventArgs e)
         {
-
+            News news = new News();
+            NavigationService.Navigate(news);
         }
 
         private void Settings(object sender, RoutedEventArgs e)
