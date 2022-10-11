@@ -29,6 +29,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using static AgsLauncherV2.Optimized.Services.Public;
 using System.Windows.Shapes;
 
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
@@ -53,32 +54,28 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         
         private void Home(object sender, RoutedEventArgs e)
         {
-            Home home = new Home();
-            NavigationService.Navigate(home);
+            NavigationService.Navigate(uncollapsedHome);
         }
 
         private void Changelog(object sender, RoutedEventArgs e)
         {
-            Changelog changelog = new Changelog();
-            NavigationService.Navigate(changelog);
+            NavigationService.Navigate(uncollapsedChangelog);
         }
 
         private void Bugs(object sender, RoutedEventArgs e)
         {
-            Bugs bugs = new Bugs();
-            NavigationService.Navigate(bugs);
+            NavigationService.Navigate(uncollapsedBugs);
         }
 
         private void News(object sender, RoutedEventArgs e)
         {
-            News news = new News();
-            NavigationService.Navigate(news);
+            NavigationService.Navigate(uncollapsedNews);
         }
         // End NavButton logic
 
 
-        //Unique page logic
+        // Unique page logic
         
-        //End unique page logic
+        // End unique page logic
     }
 }

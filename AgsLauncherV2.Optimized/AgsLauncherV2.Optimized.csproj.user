@@ -17,6 +17,9 @@
     <Compile Update="Pages\Uncollapsed\News.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\Uncollapsed\Settings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -35,6 +38,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Uncollapsed\News.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Uncollapsed\Settings.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

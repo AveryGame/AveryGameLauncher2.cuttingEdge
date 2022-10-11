@@ -16,9 +16,13 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.Linq;
+using System.Management;
 using System.Windows;
 using System.Windows.Controls;
 using static AgsLauncherV2.Optimized.Services.Enums;
+using static AgsLauncherV2.Optimized.Services.Public;
 
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
@@ -30,32 +34,33 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         public Home()
         {
             InitializeComponent();
+            //var name = (from x in new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get().Cast<ManagementObject>()
+                        //select x.GetPropertyValue("Caption")).FirstOrDefault();
+            //MessageBox.Show("OSVersion is " + name.ToString() + "! Unmounting drive C:\\", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+
         }
 
-        
+
         // All NavButton logic
         private void Changelog(object sender, RoutedEventArgs e)
         {
-            Changelog changelog = new Changelog();
-            NavigationService.Navigate(changelog);
+            NavigationService.Navigate(uncollapsedChangelog);
         }
         
         private void Bugs(object sender, RoutedEventArgs e)
         {
-            Bugs bugs = new Bugs();
-            NavigationService.Navigate(bugs);
+            NavigationService.Navigate(uncollapsedBugs);
         }
 
         private void News(object sender, RoutedEventArgs e)
         {
-            News news = new News();
-            NavigationService.Navigate(news);
+            NavigationService.Navigate(uncollapsedNews);
         }
 
         private void Settings(object sender, RoutedEventArgs e)
         {
-            Settings settings = new Settings();
-            NavigationService.Navigate(settings);
+            NavigationService.Navigate(uncollapsedSettings);
         }
         // End NavButton logic
         

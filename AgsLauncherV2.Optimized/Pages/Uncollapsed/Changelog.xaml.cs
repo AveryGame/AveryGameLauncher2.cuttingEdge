@@ -28,6 +28,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static AgsLauncherV2.Optimized.Services.Public;
 
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
@@ -45,26 +46,22 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         // All NavButton logic
         private void Home(object sender, RoutedEventArgs e)
         {
-            Home home = new Home();
-            NavigationService.Navigate(home);
+            NavigationService.Navigate(uncollapsedHome);
         }
 
         private void Bugs(object sender, RoutedEventArgs e)
         {
-            Bugs bugs = new Bugs();
-            NavigationService.Navigate(bugs);
+            NavigationService.Navigate(uncollapsedBugs);
         }
 
         private void News(object sender, RoutedEventArgs e)
         {
-            News news = new News();
-            NavigationService.Navigate(news);
+            NavigationService.Navigate(uncollapsedNews);
         }
 
         private void Settings(object sender, RoutedEventArgs e)
         {
-            Settings settings = new Settings();
-            NavigationService.Navigate(settings);
+            NavigationService.Navigate(uncollapsedSettings);
         }
         // End NavButton logic
 

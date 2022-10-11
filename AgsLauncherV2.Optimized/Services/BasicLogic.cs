@@ -17,9 +17,11 @@
 */
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using static AgsLauncherV2.Optimized.Services.Enums;
+using static AgsLauncherV2.Optimized.Services.Public;
 
 namespace AgsLauncherV2.Optimized.Services
 {
@@ -59,6 +61,19 @@ namespace AgsLauncherV2.Optimized.Services
                     
                 }
             }
+        }
+        
+        public static void CheckAppData()
+        {
+            if (!Directory.Exists(appData))
+            {
+                Directory.CreateDirectory(appData);
+            }
+        }
+        
+        public static void CreateAppData()
+        {
+            Directory.CreateDirectory(appData);
         }
         
         private static int _exitCode = -1;

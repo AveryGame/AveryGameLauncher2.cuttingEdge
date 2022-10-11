@@ -93,7 +93,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="ChangelogButton" Content="Changelog" HorizontalAlignment="Left" Margin="6,80,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1">
+        <Button Name="ChangelogButton" Content="Changelog" HorizontalAlignment="Left" Margin="6,80,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Click="Changelog" Foreground="White" Background="#FF24252B" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -201,7 +201,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="SettingsButton" Content="• Settings" HorizontalAlignment="Left" Margin="6,170,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1" Visibility="Visible" IsEnabled="False">
+        <Button x:Name="SettingsButton" Content="• Settings" HorizontalAlignment="Left" Margin="6,170,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1" Visibility="Visible" IsEnabled="False">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>

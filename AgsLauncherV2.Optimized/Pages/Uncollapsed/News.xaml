@@ -250,8 +250,11 @@
         <!--Page Content-->
         <TextBlock Name="NewsHeader" TextWrapping="Wrap" Text="NewsHeader" Foreground="White" Margin="168,269,20,149" Grid.ColumnSpan="2" TextAlignment="Left" FontSize="20" FontWeight="Normal" FontFamily="Segoe UI Semibold" Opacity="1"/>
         <TextBlock x:Name="NewsSubheader" TextWrapping="Wrap" Text="NewsSubheader" Foreground="White" Margin="168,301,20,106" Grid.ColumnSpan="2" TextAlignment="Left" FontSize="14" FontWeight="Normal" FontFamily="Segoe UI Variable Display Light" Opacity="1"/>
+        <Image gif:AnimationBehavior.SourceUri="/img/cuttingEdge-Load.gif" Grid.ColumnSpan="2" Margin="168,28,20,192"/>
         <Border x:Name="NewsImageBorder" CornerRadius="5,5,5,5" Grid.ColumnSpan="2" Margin="168,28,20,192">
-            <Image gif:AnimationBehavior.SourceUri="/img/cuttingEdge-Load.gif"/>
+            <Border.Background>
+                <ImageBrush x:Name="imageBrush" ImageSource="/img/slate-blank.png" Opacity="0"/>
+            </Border.Background>
         </Border>
         <TextBlock Name="NewsDate" TextWrapping="Wrap" Text="NewsDate" Margin="159,269,20,0" Grid.Column="1" FontSize="8" TextAlignment="Right" VerticalAlignment="Top" Foreground="Black" Opacity="1"/>
         <!--End page content-->

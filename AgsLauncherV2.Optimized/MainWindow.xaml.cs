@@ -17,20 +17,11 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using static AgsLauncherV2.Optimized.Services.Enums;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static AgsLauncherV2.Optimized.Services.Public;
 
 namespace AgsLauncherV2.Optimized
 {
@@ -42,6 +33,10 @@ namespace AgsLauncherV2.Optimized
         public MainWindow()
         {
             InitializeComponent();
+            MessageBox.Show(appData + "clientStrings.json");
+            Services.BasicLogic.CheckAppData();
+            WebClient wc = new WebClient();
+            wc.DownloadFile(new Uri(apiBase + "clientStrings.json"), appData + "clientStrings.json");
             launcherStatus = LauncherStatus.initialized;
         }
 
@@ -49,35 +44,32 @@ namespace AgsLauncherV2.Optimized
         // All NavButton logic
         private void Home(object sender, RoutedEventArgs e)
         {
-            Pages.Uncollapsed.Home home = new Pages.Uncollapsed.Home();
-            pageHost.NavigationService.Navigate(home);
+            pageHost.NavigationService.Navigate(uncollapsedHome);
             pageHost.Visibility = Visibility.Visible;
         }
         
         private void Changelog(object sender, RoutedEventArgs e)
         {
-            Pages.Uncollapsed.Changelog changelog = new Pages.Uncollapsed.Changelog();
-            pageHost.NavigationService.Navigate(changelog);
+            pageHost.NavigationService.Navigate(uncollapsedChangelog);
             pageHost.Visibility = Visibility.Visible;
         }
 
         private void Bugs(object sender, RoutedEventArgs e)
         {
-            Pages.Uncollapsed.Bugs bugs = new Pages.Uncollapsed.Bugs();
-            pageHost.NavigationService.Navigate(bugs);
+            pageHost.NavigationService.Navigate(uncollapsedBugs);
             pageHost.Visibility = Visibility.Visible;
         }
 
         private void News(object sender, RoutedEventArgs e)
         {
-            Pages.Uncollapsed.News news = new Pages.Uncollapsed.News();
-            pageHost.NavigationService.Navigate(news);
+            pageHost.NavigationService.Navigate(uncollapsedNews);
             pageHost.Visibility = Visibility.Visible;
         }
 
         private void Settings(object sender, RoutedEventArgs e)
         {
-
+            pageHost.NavigationService.Navigate(uncollapsedSettings);
+            pageHost.Visibility = Visibility.Visible;
         }
         // End NavButton logic
 
