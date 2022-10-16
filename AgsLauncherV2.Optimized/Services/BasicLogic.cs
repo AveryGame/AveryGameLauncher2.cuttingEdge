@@ -18,6 +18,7 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
 using static AgsLauncherV2.Optimized.Services.Enums;
@@ -65,10 +66,21 @@ namespace AgsLauncherV2.Optimized.Services
         
         public static void CheckAppData()
         {
-            if (!Directory.Exists(appData))
+            if (!Directory.Exists(Public.appData))
             {
-                Directory.CreateDirectory(appData);
+                Directory.CreateDirectory(Public.appData);
+                DownloadAppData();
             }
+            else if (Directory.Exists(appData))
+            {
+                DownloadAppData();
+            }
+        }
+
+        public static void DownloadAppData()
+        {
+            WebClient wc = new WebClient();
+            wc.DownloadFile(new Uri(apiBase + "clientStrings.json"), appData + "clientStrings.json");
         }
         
         public static void CreateAppData()

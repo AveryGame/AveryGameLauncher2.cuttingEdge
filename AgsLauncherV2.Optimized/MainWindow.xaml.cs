@@ -30,13 +30,13 @@ namespace AgsLauncherV2.Optimized
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
         public MainWindow()
         {
             InitializeComponent();
-            MessageBox.Show(appData + "clientStrings.json");
+
+            MessageBox.Show(localAppData + "clientStrings.json");
             Services.BasicLogic.CheckAppData();
-            WebClient wc = new WebClient();
-            wc.DownloadFile(new Uri(apiBase + "clientStrings.json"), appData + "clientStrings.json");
             launcherStatus = LauncherStatus.initialized;
         }
 
