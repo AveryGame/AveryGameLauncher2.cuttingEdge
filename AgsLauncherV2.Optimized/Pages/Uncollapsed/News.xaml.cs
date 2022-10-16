@@ -45,8 +45,9 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
             InitializeComponent();
             for (int i = 0; i < 1243134123; i++)
             {
-                if ((bool)(mainWindow.pageHost.Content = this))
-                {
+                //if ((bool)(mainWindow.pageHost.Content = this))
+                //{
+                /*
                     MessageBox.Show("initialized");
                     string DATA = File.ReadAllText(appData + "clientSettings.json");
                     Services.AGCloud json = JsonConvert.DeserializeObject<Services.AGCloud>(DATA);
@@ -74,11 +75,12 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
                     catch
                     {
 
-                    }*/
+                    }
                     btpImg.UriSource = new Uri(json.newsImageUrl);
                     imageBrush.ImageSource = btpImg;
                     break;
-                }
+                //}
+                */
             }
         }
 
