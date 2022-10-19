@@ -66,28 +66,29 @@ namespace AgsLauncherV2.Optimized.Services
         
         public static void CheckAppData()
         {
-            if (!Directory.Exists(Public.appData))
+            if (!Directory.Exists(localAppData))
             {
-                Directory.CreateDirectory(Public.appData);
+                Directory.CreateDirectory(localAppData);
                 DownloadAppData();
             }
-            else if (Directory.Exists(appData))
+            else if (Directory.Exists(localAppData))
             {
                 DownloadAppData();
             }
         }
-
+        
         public static void DownloadAppData()
         {
             WebClient wc = new WebClient();
-            wc.DownloadFile(new Uri(apiBase + "clientStrings.json"), appData + "clientStrings.json");
+            wc.DownloadFile(new Uri(apiBase + "clientStrings.json"), localAppData + "clientStrings.json");
         }
         
         public static void CreateAppData()
         {
-            Directory.CreateDirectory(appData);
+            Directory.CreateDirectory(localAppData);
         }
         
         private static int _exitCode = -1;
+        private static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
     }
 }

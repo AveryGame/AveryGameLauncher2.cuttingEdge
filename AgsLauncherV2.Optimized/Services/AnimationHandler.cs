@@ -9,14 +9,14 @@ namespace AgsLauncherV2.Optimized.Services
 {
     internal class AnimationHandler
     {
-        public static void FadeIn(DependencyObject targetObject)
+        public static void FadeIn(DependencyObject targetObject, double timeToFade)
         {
             var b = targetObject;
             var fade = new DoubleAnimation()
             {
                 From = 0,
                 To = 1,
-                Duration = TimeSpan.FromSeconds(0.15),
+                Duration = TimeSpan.FromSeconds(timeToFade),
             };
             Storyboard.SetTarget(fade, b);
             Storyboard.SetTargetProperty(fade, new PropertyPath(Button.OpacityProperty));

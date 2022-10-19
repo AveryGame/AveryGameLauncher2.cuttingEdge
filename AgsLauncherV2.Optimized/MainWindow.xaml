@@ -246,14 +246,18 @@
         <!--End NavButton Icons-->
         <!--End basic page layout-->
         <!--Page content-->
-        <Label Name="AGSLogo" FontSize="172" FontFamily="Corbel Light" Height="329" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="491" Opacity="1" Margin="0,0,2,0" Grid.ColumnSpan="2">
+        <Label x:Name="AGSLogo" Content="AGS" Grid.ColumnSpan="2" Margin="325,1,0,-1" FontSize="172" FontFamily="Segoe UI Variable Text Light" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="40" RenderingBias="Quality" Direction="0" ShadowDepth="1"/>
+            </Label.Effect>
             <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF313131" Offset="0.667"/>
+                <LinearGradientBrush EndPoint="0.5,0.8" StartPoint="0.5,0">
                     <GradientStop Color="#FF5D5D5D" Offset="0"/>
+                    <GradientStop Color="#FF3A3A3A" Offset="0.743"/>
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
+
         <!--End page content-->
         <!--Page hosting frame-->
         <Frame x:Name="pageHost" Content="" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden" Visibility="Hidden"/>
@@ -334,12 +338,12 @@
         </Button>
         <!--End page management content-->
         <!--Cutting edge branch notice-->
-        <Border Name="cuttingEdgeNoticeBlackout" BorderBrush="Black" BorderThickness="1" Background="Black" Grid.ColumnSpan="2" Opacity="0.8" Visibility="Visible"/>
-        <DockPanel Name="cuttingEdgeNotice" Grid.ColumnSpan="2">
+        <Border Name="cuttingEdgeNoticeBlackout" BorderBrush="Black" BorderThickness="1" Background="Black" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden" MouseDown="DragBar"/>
+        <DockPanel Name="cuttingEdgeNotice" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden">
             <Border BorderBrush="#FF191919" CornerRadius="8" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="202" Margin="254,23,0,0" VerticalAlignment="Top" Width="358" Background="#FF191919">
-                <Label x:Name="ceNotice" Content="NOTICE!" Foreground="#FFD0D0D0" HorizontalAlignment="Center" FontSize="48" Margin="0,0,0,134"/>
+                <Label x:Name="ceNotice" Content="NOTICE!" Foreground="#FFD0D0D0" HorizontalAlignment="Center" FontSize="48" Margin="0,0,0,134" FontFamily="Segoe UI Semibold"/>
             </Border>
-            <Button x:Name="acceptCeNoticeButton" Content="Accept" HorizontalAlignment="Left" Margin="-85,187,0,0" VerticalAlignment="Top" Width="66" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1" Visibility="Visible" Grid.Column="1">
+            <Button x:Name="acceptCeNoticeButton" Content="Accept" HorizontalAlignment="Left" Margin="-85,187,0,0" VerticalAlignment="Top" Width="66" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="acceptCeNotice" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1" Visibility="Visible" Grid.Column="1">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="15"/>
@@ -375,7 +379,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock x:Name="ceNoticeDetails" TextWrapping="Wrap" Text="AveryGameLauncher2.cuttingEdge (Internally AveryGameLauncher2.Optimized) is in development. This means there WILL be several bugs involved. This program is without warranty. If you aren't a developer, go away." HorizontalAlignment="Center" TextAlignment="Center" Foreground="#FFBBBBBB" Margin="-300,100,248,270" Grid.ColumnSpan="2" FontSize="11"/>
+            <TextBlock x:Name="ceNoticeDetails" TextWrapping="Wrap" Text="AveryGameLauncher2.cuttingEdge (Internally AveryGameLauncher2.Optimized) is in development. This means there WILL be several bugs involved. This program is without warranty. If you aren't a developer, go away." HorizontalAlignment="Center" TextAlignment="Center" Foreground="#FFBBBBBB" Margin="-300,100,248,270" Grid.ColumnSpan="2" FontSize="11" FontFamily="Segoe UI Variable Small Light"/>
         </DockPanel>
         <!--End cutting edge branch notice-->
     </Grid>

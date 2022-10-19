@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Windows;
 
 namespace AgsLauncherV2.Optimized.Services
 {
@@ -13,7 +16,13 @@ namespace AgsLauncherV2.Optimized.Services
         public static Pages.Uncollapsed.Settings uncollapsedSettings = new Pages.Uncollapsed.Settings();
         public static MainWindow mainWindow = new MainWindow();
         public const string apiBase = "https://www.averyga.me/api/launcher/v2/cuttingedge/";
-        public static string appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData).ToString() + "\\AveryGame Launcher\\CuttingEdge\\";
+        private static readonly string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\" + "clientStrings.json";
+        public static AGCloud json = JsonConvert.DeserializeObject<AGCloud>(File.ReadAllText(filePath));
+        public static void DebugShit()
+        {
+            MessageBox.Show(filePath);
+            MessageBox.Show(json.showCuttingEdgeNotice.ToString());
+        }
     }
     public class AGCloud
     {

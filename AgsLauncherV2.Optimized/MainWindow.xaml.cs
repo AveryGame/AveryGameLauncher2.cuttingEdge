@@ -18,10 +18,12 @@
 
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using static AgsLauncherV2.Optimized.Services.Enums;
-using static AgsLauncherV2.Optimized.Services.Public;
+using AgsLauncherV2.Optimized.Services;
+using Newtonsoft.Json;
 
 namespace AgsLauncherV2.Optimized
 {
@@ -33,42 +35,44 @@ namespace AgsLauncherV2.Optimized
         private string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
         public MainWindow()
         {
+            //test
             InitializeComponent();
 
-            MessageBox.Show(localAppData + "clientStrings.json");
-            Services.BasicLogic.CheckAppData();
+            BasicLogic.CheckAppData();
             launcherStatus = LauncherStatus.initialized;
+            //loadJsonStrings();
+            //AGCloud json = JsonConvert.DeserializeObject<AGCloud>(localAppData + "clientStrings.json");
         }
 
         
         // All NavButton logic
         private void Home(object sender, RoutedEventArgs e)
         {
-            pageHost.NavigationService.Navigate(uncollapsedHome);
+            pageHost.NavigationService.Navigate(Public.uncollapsedHome);
             pageHost.Visibility = Visibility.Visible;
         }
         
         private void Changelog(object sender, RoutedEventArgs e)
         {
-            pageHost.NavigationService.Navigate(uncollapsedChangelog);
+            pageHost.NavigationService.Navigate(Public.uncollapsedChangelog);
             pageHost.Visibility = Visibility.Visible;
         }
 
         private void Bugs(object sender, RoutedEventArgs e)
         {
-            pageHost.NavigationService.Navigate(uncollapsedBugs);
+            pageHost.NavigationService.Navigate(Public.uncollapsedBugs);
             pageHost.Visibility = Visibility.Visible;
         }
 
         private void News(object sender, RoutedEventArgs e)
         {
-            pageHost.NavigationService.Navigate(uncollapsedNews);
+            pageHost.NavigationService.Navigate(Public.uncollapsedNews);
             pageHost.Visibility = Visibility.Visible;
         }
 
         private void Settings(object sender, RoutedEventArgs e)
         {
-            pageHost.NavigationService.Navigate(uncollapsedSettings);
+            pageHost.NavigationService.Navigate(Public.uncollapsedSettings);
             pageHost.Visibility = Visibility.Visible;
         }
         // End NavButton logic
@@ -76,7 +80,7 @@ namespace AgsLauncherV2.Optimized
         // Basic window logic
         private void Close(object sender, RoutedEventArgs e)
         {
-            Services.BasicLogic.HandleClose(launcherStatus, false, true, 1);
+            BasicLogic.HandleClose(launcherStatus, false, true, 1);
         }
 
         private void Minimize(object sender, RoutedEventArgs e)
@@ -92,5 +96,41 @@ namespace AgsLauncherV2.Optimized
             }
         }
         // End basic window logic
+
+        //Unique page logic
+        private async void acceptCeNotice(object sender, RoutedEventArgs e)
+        {
+            AnimationHandler.FadeOut(cuttingEdgeNotice, 0.15);
+            AnimationHandler.FadeOut(cuttingEdgeNoticeBlackout, 0.2);
+            await Task.Delay(200);
+            cuttingEdgeNotice.IsEnabled = false;
+            cuttingEdgeNoticeBlackout.IsEnabled = false;
+            cuttingEdgeNotice.Margin = new Thickness(69420, 69420, 69420, 69420);
+            cuttingEdgeNoticeBlackout.Margin = new Thickness(69420, 69420, 69420, 69420);
+        }
+
+        private async void loadJsonStrings()
+        {
+            try
+            {
+                if (Public.json.showCuttingEdgeNotice == true)
+                {
+                    MessageBox.Show("showCuttingEdgeNotice = true");
+                    cuttingEdgeNotice.IsEnabled = true;
+                    cuttingEdgeNoticeBlackout.IsEnabled = true;
+                    cuttingEdgeNotice.Margin = new Thickness(0, 0, 0, 0);
+                    cuttingEdgeNoticeBlackout.Margin = new Thickness(0, 0, 0, 0);
+                    AnimationHandler.FadeIn(cuttingEdgeNotice, 0.15);
+                    AnimationHandler.FadeIn(cuttingEdgeNoticeBlackout, 0.2);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.Normalize().ToString());
+                await Task.Delay(1000);
+                loadJsonStrings();
+            }
+        }
+        //End unique page logic
     }
 }
