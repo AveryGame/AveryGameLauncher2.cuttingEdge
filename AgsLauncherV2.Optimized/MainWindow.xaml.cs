@@ -24,6 +24,7 @@ using System.Windows.Input;
 using static AgsLauncherV2.Optimized.Services.Enums;
 using AgsLauncherV2.Optimized.Services;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace AgsLauncherV2.Optimized
 {
@@ -37,10 +38,9 @@ namespace AgsLauncherV2.Optimized
         {
             //test
             InitializeComponent();
-
             BasicLogic.CheckAppData();
             launcherStatus = LauncherStatus.initialized;
-            //loadJsonStrings();
+            loadJsonStrings();
             //AGCloud json = JsonConvert.DeserializeObject<AGCloud>(localAppData + "clientStrings.json");
         }
 
@@ -111,9 +111,11 @@ namespace AgsLauncherV2.Optimized
 
         private async void loadJsonStrings()
         {
+            MessageBox.Show("Checking JSON strings");
             try
             {
-                if (Public.json.showCuttingEdgeNotice == true)
+                AGCloud json = JsonConvert.DeserializeObject<AGCloud>(File.ReadAllText(localAppData + "clientStrings.json"));
+                if (json.showCuttingEdgeNotice == true)
                 {
                     MessageBox.Show("showCuttingEdgeNotice = true");
                     cuttingEdgeNotice.IsEnabled = true;
