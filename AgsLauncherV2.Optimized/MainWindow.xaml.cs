@@ -39,8 +39,6 @@ namespace AgsLauncherV2.Optimized
             //test
             InitializeComponent();
             BasicLogic.CheckAppData();
-            launcherStatus = LauncherStatus.initialized;
-            loadJsonStrings();
             //AGCloud json = JsonConvert.DeserializeObject<AGCloud>(localAppData + "clientStrings.json");
         }
 
@@ -105,25 +103,28 @@ namespace AgsLauncherV2.Optimized
             await Task.Delay(200);
             cuttingEdgeNotice.IsEnabled = false;
             cuttingEdgeNoticeBlackout.IsEnabled = false;
+            cuttingEdgeNotice.Visibility = Visibility.Hidden;
+            cuttingEdgeNoticeBlackout.Visibility = Visibility.Hidden;
             cuttingEdgeNotice.Margin = new Thickness(69420, 69420, 69420, 69420);
             cuttingEdgeNoticeBlackout.Margin = new Thickness(69420, 69420, 69420, 69420);
         }
 
         private async void loadJsonStrings()
         {
-            MessageBox.Show("Checking JSON strings");
             try
             {
                 AGCloud json = JsonConvert.DeserializeObject<AGCloud>(File.ReadAllText(localAppData + "clientStrings.json"));
                 if (json.showCuttingEdgeNotice == true)
                 {
-                    MessageBox.Show("showCuttingEdgeNotice = true");
+                    await Task.Delay(250);
+                    cuttingEdgeNotice.Visibility = Visibility.Visible;
+                    cuttingEdgeNoticeBlackout.Visibility = Visibility.Visible;
                     cuttingEdgeNotice.IsEnabled = true;
                     cuttingEdgeNoticeBlackout.IsEnabled = true;
                     cuttingEdgeNotice.Margin = new Thickness(0, 0, 0, 0);
                     cuttingEdgeNoticeBlackout.Margin = new Thickness(0, 0, 0, 0);
-                    AnimationHandler.FadeIn(cuttingEdgeNotice, 0.15);
-                    AnimationHandler.FadeIn(cuttingEdgeNoticeBlackout, 0.2);
+                    AnimationHandler.FadeIn(cuttingEdgeNotice, 0.2, false);
+                    AnimationHandler.FadeIn(cuttingEdgeNoticeBlackout, 0.2, false);
                 }
             }
             catch (Exception ex)
@@ -132,6 +133,12 @@ namespace AgsLauncherV2.Optimized
                 await Task.Delay(1000);
                 loadJsonStrings();
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            launcherStatus = LauncherStatus.initialized;
+            loadJsonStrings();
         }
         //End unique page logic
     }

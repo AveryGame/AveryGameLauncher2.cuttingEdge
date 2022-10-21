@@ -16,13 +16,6 @@ namespace AgsLauncherV2.Optimized.Services
         public static Pages.Uncollapsed.Settings uncollapsedSettings = new Pages.Uncollapsed.Settings();
         public static MainWindow mainWindow = new MainWindow();
         public const string apiBase = "https://www.averyga.me/api/launcher/v2/cuttingedge/";
-        public static string filePath = Environment.SpecialFolder.LocalApplicationData + "\\AveryGame Launcher\\CuttingEdge\\" + "clientStrings.json";
-        public static AGCloud json = JsonConvert.DeserializeObject<AGCloud>(File.ReadAllText(filePath));
-        public static void DebugShit()
-        {
-            MessageBox.Show(filePath);
-            MessageBox.Show(json.showCuttingEdgeNotice.ToString());
-        }
     }
     public class AGCloud
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,20 +15,38 @@ namespace AgsLauncherV2.Optimized.Services
         /// </summary>
         /// <param name="targetObject">The object to fade in</param>
         /// <param name="timeToFade">The amount time to fade the object in</param>
-        public static void FadeIn(DependencyObject targetObject, double timeToFade)
+        public static void FadeIn(DependencyObject targetObject, double timeToFade, bool useCustomOpacity, [Optional] double targetOpacity)
         {
-            var b = targetObject;
-            var fade = new DoubleAnimation()
+            if (useCustomOpacity == true)
             {
-                From = 0,
-                To = 1,
-                Duration = TimeSpan.FromSeconds(timeToFade),
-            };
-            Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new PropertyPath(Button.OpacityProperty));
-            var sb = new Storyboard();
-            sb.Children.Add(fade);
-            sb.Begin();
+                var bC = targetObject;
+                var fadeC = new DoubleAnimation()
+                {
+                    From = 0,
+                    To = targetOpacity,
+                    Duration = TimeSpan.FromSeconds(timeToFade),
+                };
+                Storyboard.SetTarget(fadeC, bC);
+                Storyboard.SetTargetProperty(fadeC, new PropertyPath(Button.OpacityProperty));
+                var sbC = new Storyboard();
+                sbC.Children.Add(fadeC);
+                sbC.Begin();
+            }
+            else if (useCustomOpacity == false)
+            {
+                var b = targetObject;
+                var fade = new DoubleAnimation()
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromSeconds(timeToFade),
+                };
+                Storyboard.SetTarget(fade, b);
+                Storyboard.SetTargetProperty(fade, new PropertyPath(Button.OpacityProperty));
+                var sb = new Storyboard();
+                sb.Children.Add(fade);
+                sb.Begin();
+            }
         }
         /// <summary>
         /// Fades out an inputted XAML object

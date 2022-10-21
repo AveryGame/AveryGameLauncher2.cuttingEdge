@@ -23,7 +23,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AgsLauncherV2.Optimized"
         mc:Ignorable="d"
-        Title="AveryGame Launcher V2" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None">
+        Title="AveryGame Launcher V2" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None" Loaded="Window_Loaded">
     <Grid Background="#FF24252B">
         <!--Basic page layout-->
         <Grid.ColumnDefinitions>
@@ -338,7 +338,7 @@
         </Button>
         <!--End page management content-->
         <!--Cutting edge branch notice-->
-        <Border Name="cuttingEdgeNoticeBlackout" BorderBrush="Black" BorderThickness="1" Background="Black" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden" MouseDown="DragBar"/>
+        <Border Name="cuttingEdgeNoticeBlackout" BorderBrush="Black" BorderThickness="1" Background="#66000000" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden" MouseDown="DragBar"/>
         <DockPanel Name="cuttingEdgeNotice" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden">
             <Border BorderBrush="#FF191919" CornerRadius="8" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="202" Margin="254,23,0,0" VerticalAlignment="Top" Width="358" Background="#FF191919">
                 <Label x:Name="ceNotice" Content="NOTICE!" Foreground="#FFD0D0D0" HorizontalAlignment="Center" FontSize="48" Margin="0,0,0,134" FontFamily="Segoe UI Semibold"/>
