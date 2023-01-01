@@ -16,9 +16,12 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using AgsLauncherV2.Optimized.Services;
 using System;
+using System.IO;
 using System.Linq;
 using System.Management;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using static AgsLauncherV2.Optimized.Services.Enums;
@@ -34,42 +37,84 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         public Home()
         {
             InitializeComponent();
-            //var name = (from x in new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get().Cast<ManagementObject>()
-                        //select x.GetPropertyValue("Caption")).FirstOrDefault();
-            //MessageBox.Show("OSVersion is " + name.ToString() + "! Unmounting drive C:\\", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-
-
+            LoadJsonOnPageEntry();
+            LoadVarsOnPageEntry();
+            CheckGameExistsLoop();
         }
 
-
-        // All NavButton logic
-        private void Changelog(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedChangelog);
-        }
-        
-        private void Bugs(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedBugs);
-        }
-
-        private void News(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedNews);
-        }
-
-        private void Settings(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedSettings);
-        }
-        // End NavButton logic
-        
 
         //Unique page logic
+        private async void CheckGameExistsLoop()
+        {
+            for (; ; )
+            {
+                if (Enums.launcherStatus != LauncherStatus.downloading) 
+                {
+                    if (File.Exists(Public.userPreferences.Ag1InstallPath))
+                    {
+                        Ag1LaunchText.Content = "Launch Avery Game";
+                        bAg1Installed = true;
+                    }
+                    if (!File.Exists(Public.userPreferences.Ag1InstallPath))
+                    {
+                        Ag1LaunchText.Content = "Install Avery Game";
+                        bAg1Installed = false;
+                    }
+                }
+                await Task.Delay(500);
+            }
+        }
+        private void LoadVarsOnPageEntry()
+        {
+            BasicLogic.ag1LaunchButton = AG1Launch;
+            BasicLogic.ag1LaunchLabel = Ag1LaunchText;
+            if (File.Exists(userPreferences.Ag1InstallPath))
+            {
+                bAg1Installed = true;
+            }
+        }
         private void LaunchButtonLogic(object sender, RoutedEventArgs e)
         {
-            
+            if (bAg1Installed)
+            {
+                BasicLogic.LaunchAg1();
+            }
+            if (!bAg1Installed)
+            {
+                BasicLogic.DownloadAg1();
+            }
         }
+
+        private void LaunchButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AnimationHandler.FadeAnimation(Ag1ImageTexture, 0.9, Ag1ImageTexture.Opacity, 0.8);
+        }
+
+        private void LaunchButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AnimationHandler.FadeAnimation(Ag1ImageTexture, 0.5, Ag1ImageTexture.Opacity, 0.3);
+        }
+
+        private void LaunchButton_Copy_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AnimationHandler.FadeAnimation(Ag2ImageTexture, 0.9, Ag2ImageTexture.Opacity, 0.8);
+        }
+
+        private void LaunchButton_Copy_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AnimationHandler.FadeAnimation(Ag2ImageTexture, 0.5, Ag2ImageTexture.Opacity, 0.3);
+        }
+        
+        private void LoadJsonOnPageEntry()
+        {
+            if (!File.Exists(Public.userPreferences.Ag1InstallPath))
+            {
+                Ag1LaunchText.Content = "Install Avery Game";
+                bAg1Installed = false;
+            }
+        }
+
+        public bool bAg1Installed;
         //End unique page logic
     }
 }

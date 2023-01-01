@@ -16,6 +16,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using AgsLauncherV2.Optimized.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +41,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         public Changelog()
         {
             InitializeComponent();
+            LoadPageSpecificJson();
         }
 
         
@@ -67,7 +69,20 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 
 
         //Unique page logic
-        
+        private void LoadPageSpecificJson()
+        {
+            VerSTR.Text = "Game Version " + Public.json.devGameClientVersion + " - Launcher Version " + Public.json.devLauncherClientVersion;
+            LogLine1.Text = Public.json.changeLogs[0];
+            LogLine2.Text = Public.json.changeLogs[1];
+            LogLine3.Text = Public.json.changeLogs[2];
+            LogLine4.Text = Public.json.changeLogs[3];
+            LogLine5.Text = Public.json.changeLogs[4];
+            LogLine6.Text = Public.json.changeLogs[5];
+            LogLine7.Text = Public.json.changeLogs[6];
+            LogLine8.Text = Public.json.changeLogs[7];
+            LogLine9.Text = Public.json.changeLogs[8];
+            LogLine10.Text = Public.json.changeLogs[9];
+        }
         //End unique page logic
     }
 }

@@ -15,31 +15,18 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-    <Page x:Class="AgsLauncherV2.Optimized.Pages.Uncollapsed.Home"
+<Page x:Class="AgsLauncherV2.Optimized.Pages.Uncollapsed.Home"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="404" d:DesignWidth="636"
       Title="Home"
       ShowsNavigationUI="False">
 
     <Grid Background="#FF24252B">
         <!--Basic page layout-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="19*"/>
-            <ColumnDefinition Width="13*"/>
-        </Grid.ColumnDefinitions>
-        <Border Name="CollapsedSidebar" BorderBrush="#FF191919" BorderThickness="1000" Margin="0,16,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="44" >
-            <Label Content="Label" HorizontalAlignment="Center" Height="0" VerticalAlignment="Center" Width="0"/>
-        </Border>
-        <Border Name="UncollapsedSidebar" BorderBrush="#FF191919" BorderThickness="1000" Margin="0,16,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="144" Opacity="1">
-            <Label Content="Label" HorizontalAlignment="Center" Height="0" VerticalAlignment="Center" Width="0"/>
-        </Border>
-        <Border BorderBrush="#FF121212" BorderThickness="1000" Height="30" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
-        </Border>
-        <Label Name="AveryGame" Content="Avery Game" Foreground="White" FontFamily="Corbel Light" FontSize="20" Margin="18,10,0,0" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108" Opacity="1"/>
         <Label Content="Loading..." HorizontalAlignment="Left" Margin="33,422,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" Width="800" Height="28" FontFamily="Segoe UI Variable Text Light" Name="WelcomeRPCLabel" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="ReleaseString" Text="ags+kamo+2.8+dev--cuttingEdge" HorizontalAlignment="Center" Margin="0,426,0,0" VerticalAlignment="Top" Width="321" Height="20" FontSize="14" FontFamily="Segoe UI Variable Text Light" Foreground="White" TextAlignment="Right" Grid.Column="1" Opacity="0.06"/>
         <!--RPC pfp image-->
@@ -49,211 +36,71 @@
         <Border BorderThickness="4" BorderBrush="#FF121212" Margin="2,420,441,-1"/>
         <!--End RPC pfp image-->
         <!--NavButtons-->
-        <Button Name="HomeButton" Content="• Home" HorizontalAlignment="Left" Margin="6,50,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1" IsEnabled="False">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Width="131" Height="20" CornerRadius="2" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#FF8EBA8A"/>
-                    <Setter Property="Cursor" Value="Hand"></Setter>
-                    <Style.Triggers>
-
-                        <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF313461" To="#FF24252B"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF24252B" To="#FF313461"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="UIElement.MouseDown">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.05" From="#FF313461" To="#FF545E9A"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button Name="ChangelogButton" Content="Changelog" HorizontalAlignment="Left" Margin="6,80,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Changelog" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Width="131" Height="20" CornerRadius="2" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#FF8EBA8A"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Style.Triggers>
-                        <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF24252B" To="#FF313461"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF313461" To="#FF24252B"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button Name="BugsButton" Content="Bugs" HorizontalAlignment="Left" Margin="6,110,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Bugs" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Width="131" Height="20" CornerRadius="2" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#FF8EBA8A"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Style.Triggers>
-                        <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF24252B" To="#FF313461"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF313461" To="#FF24252B"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button x:Name="NewsButton" Content="News" HorizontalAlignment="Left" Margin="6,140,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="News" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Width="131" Height="20" CornerRadius="2" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#FF8EBA8A"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Style.Triggers>
-                        <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF24252B" To="#FF313461"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF313461" To="#FF24252B"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Margin="6,170,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Segoe UI Variable Text Light" Height="20" Opacity="1" Visibility="Visible">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Button.Resources>
-            <Button.Template>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Width="131" Height="20" CornerRadius="2" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#FF8EBA8A"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Style.Triggers>
-                        <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF24252B" To="#FF313461"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF313461" To="#FF24252B"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
         <!--End NavButtons-->
         <!--NavButton Icons-->
-        <Image Name="HomeIcon" HorizontalAlignment="Left" Height="20" Margin="11,50,0,0" VerticalAlignment="Top" Width="21" Source="/img/HomeButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="ChangelogIcon" HorizontalAlignment="Left" Height="20" Margin="11,80,0,0" VerticalAlignment="Top" Width="21" Source="/img/ChangelogButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="BugsIcon" HorizontalAlignment="Left" Height="22" Margin="11,110,0,0" VerticalAlignment="Top" Width="20" Source="/img/BugsButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="NewsIcon" HorizontalAlignment="Left" Height="18" Margin="12,141,0,0" VerticalAlignment="Top" Width="20" Source="/img/NewsButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="SettingsIcon" HorizontalAlignment="Left" Height="18" Margin="12,171,0,0" VerticalAlignment="Top" Width="18" Source="/img/SettingsButton.Icon.png" Opacity="1" RenderOptions.BitmapScalingMode="Fant"/>
         <!--End NavButton Icons-->
         <!--End basic page layout-->
         <!--Page content-->
-        <TextBlock Name="PageTitle" Text="Home" HorizontalAlignment="Left" Margin="143,26,0,0" VerticalAlignment="Top" Width="657" TextAlignment="Center" Foreground="White" FontFamily="Segoe UI Variable Text Light" Height="73" FontSize="36" Opacity="1" Grid.ColumnSpan="2" RenderTransformOrigin="0.501,0.548"/>
-        <TextBlock Name="WelcomeText" HorizontalAlignment="Left" Margin="144,82,0,0" TextWrapping="Wrap" Text="Welcome to the AGS Launcher!" VerticalAlignment="Top" Height="48" Width="656" Foreground="White" FontFamily="Segoe UI Variable Text Light" FontSize="32" Opacity="1" Grid.ColumnSpan="2" TextAlignment="Center"/>
-        <TextBlock Name="LauncherInfoText" HorizontalAlignment="Left" Margin="264,130,0,0" TextWrapping="Wrap" Text="Here is where you can read the latest patch notes, look at current bugs, download Avery Game, and launch it." VerticalAlignment="Top" Height="101" Width="426" Foreground="White" TextAlignment="Center" FontFamily="Segoe UI Variable Text Light" FontSize="24" Opacity="1" Grid.ColumnSpan="2"/>
+        <Label Name="PageTitle" Content="Home" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="636" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontFamily="/Lib/Fonts/Bold/#Rotunda" Height="73" FontSize="56" Opacity="1" RenderTransformOrigin="0.52,0.434"/>
+        <TextBlock Name="WelcomeText" HorizontalAlignment="Center" Margin="0,88,0,0" TextWrapping="Wrap" Text="Welcome to the AGS Launcher!" VerticalAlignment="Top" Height="48" Width="636" Foreground="White" FontFamily="/Lib/Fonts/Bold/#Rubik" FontSize="32" Opacity="1" TextAlignment="Center"/>
+        <TextBlock Name="LauncherInfoText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Here is where you can read the latest patch notes, look at current bugs, download Avery Game, and launch it." VerticalAlignment="Center" Height="100" Width="426" Foreground="White" TextAlignment="Center" FontFamily="/Lib/Fonts/Light/#Rubik" FontSize="24" Opacity="1"/>
         <!--Launch button-->
-        <Button Name="LaunchButton" Content="Launch Avery Game" HorizontalAlignment="Left" Height="29" Margin="356,371,0,0" VerticalAlignment="Top" Width="242" Opacity="1" FontFamily="Corbel Light" Background="#FF211F1F" BorderBrush="Gainsboro" Foreground="White" Click="LaunchButtonLogic" Visibility="Visible" Grid.ColumnSpan="2">
+        <Button Name="AG1Launch" HorizontalAlignment="Center" Height="29" Margin="0,322,0,0" VerticalAlignment="Top" Width="242" Opacity="1" FontFamily="/Lib/Fonts/Normal/#Trebuchet MS" BorderBrush="Gainsboro" Foreground="White" Click="LaunchButtonLogic" MouseEnter="LaunchButton_MouseEnter" MouseLeave="LaunchButton_MouseLeave" Visibility="Visible" Background="#FF211F1F" IsEnabled="True">
             <Button.Resources>
                 <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+            <Button.Content>
+                <Grid>
+                    <Image Name="Ag1ImageTexture" Source="/Pages/Uncollapsed/avgl2cetexture(1).png" Stretch="UniformToFill" Opacity="0.3"></Image>
+                    <Label Name="Ag1LaunchText" Content="Launch Avery Game" Foreground="White" Margin="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+                </Grid>
+            </Button.Content>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Width="242" Height="29" CornerRadius="2" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#FF8EBA8A"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF211F1F" To="#FF313461"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="00:00:00.15" From="#FF313461" To="#FF211F1F"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button x:Name="AG2Launch" HorizontalAlignment="Center" Height="29" Margin="0,356,0,0" VerticalAlignment="Top" Width="242" Opacity="0.6" FontFamily="/Lib/Fonts/Normal/#Trebuchet MS" BorderBrush="Gainsboro" Foreground="White" Click="LaunchButtonLogic" Visibility="Visible" Background="#FF211F1F" MouseEnter="LaunchButton_Copy_MouseEnter" MouseLeave="LaunchButton_Copy_MouseLeave" IsEnabled="False">
+            <Button.Content>
+                <Grid>
+                    <Image Name="Ag2ImageTexture" Source="/Pages/Uncollapsed/avgl2cetexture(1).png" Stretch="UniformToFill" Opacity="0.3"></Image>
+                    <Label Content="Launch Avery Game  " Foreground="White" Margin="56,2,0,0"></Label>
+                    <Label Content="2" Foreground="Purple" Margin="167,2,0,0">
+                        <Label.Effect>
+                            <DropShadowEffect Color="#FFE600FF" BlurRadius="8" Direction="0" ShadowDepth="0" RenderingBias="Quality"/>
+                        </Label.Effect>
+                    </Label>
+                </Grid>
+            </Button.Content>
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
                 </Style>
             </Button.Resources>

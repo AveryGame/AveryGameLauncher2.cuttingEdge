@@ -32,6 +32,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static AgsLauncherV2.Optimized.Services.Public;
 using System.Net;
+using AgsLauncherV2.Optimized.Services;
 
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
@@ -43,45 +44,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         public News()
         {
             InitializeComponent();
-            for (int i = 0; i < 1243134123; i++)
-            {
-                //if ((bool)(mainWindow.pageHost.Content = this))
-                //{
-                /*
-                    MessageBox.Show("initialized");
-                    string DATA = File.ReadAllText(appData + "clientSettings.json");
-                    Services.AGCloud json = JsonConvert.DeserializeObject<Services.AGCloud>(DATA);
-                    NewsHeader.Text = i.ToString();
-                    NewsSubheader.Text = json.newsSubHeader;
-                    NewsDate.Text = json.newsDate;
-                    BitmapImage btpImg = new BitmapImage();
-                    btpImg.BeginInit();
-                    /*try
-                    {
-                        var req = (HttpWebRequest)WebRequest.Create(json.newsImageUrl);
-                        req.Method = "HEAD";
-                        using (var resp = req.GetResponse())
-                        {
-                            if (!resp.ContentType.ToLower().StartsWith("image/"))
-                            {
-
-                            }
-                            else if (resp.ContentType.ToLower().StartsWith("image/"))
-                            {
-                                btpImg.UriSource = new Uri(json.newsImageUrl);
-                            }
-                        }
-                    }
-                    catch
-                    {
-
-                    }
-                    btpImg.UriSource = new Uri(json.newsImageUrl);
-                    imageBrush.ImageSource = btpImg;
-                    break;
-                //}
-                */
-            }
+            LoadPageSpecificJson();
         }
 
 
@@ -109,7 +72,40 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 
 
         //Unique page logic
+        private void LoadPageSpecificJson()
+        {
+            BitmapImage bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.UriSource = new Uri(Public.json.newsImageUrl);
+            bmp.EndInit();
+            var req = (HttpWebRequest)WebRequest.Create(Public.json.newsImageUrl);
+            req.Method = "HEAD";
+            using (var resp = req.GetResponse())
+            {
+                if (!resp.ContentType.ToLower().StartsWith("image/"))
+                {
+                    NewsImageBorder.Opacity = 0;
+                }
+                else if (resp.ContentType.ToLower().StartsWith("image/"))
+                {
+                    cuttingEdgeLoad.Opacity = 0;
+                    bmp.UriSource = new Uri(Public.json.newsImageUrl);
+                }
+            }
+            NewsImageBrush.ImageSource = bmp;
+            NewsHeader.Content = Public.json.newsHeader;
+            NewsSubheader.Text = Public.json.newsSubheader;
+            NewsDate.Text = Public.json.newsDate;
+        }
         
+        private ImageSource NewsImage()
+        {
+            BitmapImage bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.UriSource = new Uri(Public.json.newsImageUrl);
+            bmp.EndInit();
+            return bmp;
+        }
         //End unique page logic
     }
 }

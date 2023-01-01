@@ -25,7 +25,7 @@ namespace AgsLauncherV2.Optimized.Services
         public enum LauncherStatus
         {
             intializing,
-            initialized,
+            idle,
             downloading,
             gameLaunched,
             updating,

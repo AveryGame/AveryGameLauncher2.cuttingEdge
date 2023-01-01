@@ -16,14 +16,22 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Diagnostics;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Windows;
+using Microsoft.Toolkit.Uwp.Notifications;
 using static AgsLauncherV2.Optimized.Services.Enums;
 using static AgsLauncherV2.Optimized.Services.Public;
+using System.Linq.Expressions;
+using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace AgsLauncherV2.Optimized.Services
 {
@@ -31,7 +39,11 @@ namespace AgsLauncherV2.Optimized.Services
     {
         public static void HandleClose(LauncherStatus windowStatus, [Optional] bool force, [Optional] bool useExitCode, [Optional] int exitCode)
         {
-            if (windowStatus == LauncherStatus.initialized)
+            if (force)
+            {
+                Environment.Exit(2);
+            }
+            if (windowStatus == LauncherStatus.idle)
             {
                 if (force)
                 {
@@ -39,6 +51,7 @@ namespace AgsLauncherV2.Optimized.Services
                     {
                         _exitCode = exitCode;
                     }
+                    
                     Environment.Exit(_exitCode);
                 }
                 else
@@ -51,12 +64,12 @@ namespace AgsLauncherV2.Optimized.Services
                     Environment.Exit(_exitCode);
                 }
             }
-            if (windowStatus != LauncherStatus.initialized)
+            if (windowStatus == LauncherStatus.downloading)
             {
                 MessageBoxResult result = MessageBox.Show("AveryGame is not done downloading, and exiting will corrupt the download. Are you sure you want to exit?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
-                    HandleClose(LauncherStatus.initialized, true, true, 2);
+                    HandleClose(LauncherStatus.idle, true, true, 2);
                 }
                 else if (result == MessageBoxResult.No)
                 {
@@ -69,7 +82,8 @@ namespace AgsLauncherV2.Optimized.Services
         {
             if (!Directory.Exists(localAppData))
             {
-                Directory.CreateDirectory(localAppData);
+                CreateAppData();
+                CreateUserPreferences();
                 DownloadAppData();
             }
             else if (Directory.Exists(localAppData))
@@ -81,13 +95,98 @@ namespace AgsLauncherV2.Optimized.Services
         public static void DownloadAppData()
         {
             WebClient wc = new WebClient();
-            wc.DownloadFile(new Uri(apiBase + "clientStrings.json"), localAppData + "clientStrings.json");
+            Public.clientStrings = wc.DownloadString(new Uri(apiBase + "clientStrings.json"));
+            Public.json = JsonConvert.DeserializeObject<AGCloud>(Public.clientStrings);
+            Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+        }
+
+        public static void CreateUserPreferences()
+        {
+            string json = JsonConvert.SerializeObject(new Services.AGUserPreferences
+            {
+                CollapseSidebar = false,
+                Arguments = "",
+                InstallPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\",
+                Ag1InstallPath = "null",
+                Ag2InstallPath = "null"
+            });
+            File.WriteAllText(localAppData + "AGUserPreferences.json", json);
         }
         
         public static void CreateAppData()
         {
             Directory.CreateDirectory(localAppData);
         }
+
+        private static TaskCompletionSource<bool> eventHandled;
+        public static void LaunchAg1()
+        {
+            Process runningAg1proc = new Process();
+            runningAg1proc.StartInfo.FileName = userPreferences.Ag1InstallPath;
+            runningAg1proc.StartInfo.Arguments = userPreferences.Arguments;
+            runningAg1proc.StartInfo.WorkingDirectory = userPreferences.InstallPath + "\\Avery Game\\Finale\\";
+            runningAg1proc.Start();
+        }
+
+        private static void DownloadAg1CompletedCallback(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            try
+            {
+                
+                ag1LaunchLabel.Content = "Extracting Avery Game";
+                string gzip = "AveryGameFinale.zip";
+                ZipFile.ExtractToDirectory(Public.userPreferences.InstallPath + "\\" + gzip, Public.userPreferences.InstallPath + "\\Avery Game\\");
+                File.Delete(Public.userPreferences.InstallPath + "\\" + gzip);
+                JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+                rss["Ag1InstallPath"] = Public.userPreferences.InstallPath + "\\Avery Game\\Finale\\AveryGame.exe";
+                File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+                Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
+                ag1LaunchButton.IsEnabled = true;
+                ag1LaunchLabel.Content = "Launch Avery Game";
+                Public.uncollapsedHome.bAg1Installed = true;
+                new ToastContentBuilder()
+                    .AddArgument("action", "viewConversation")
+                    .AddArgument("conversationId", 9813)
+                    .AddText("Avery Game download status")
+                    .AddText("Avery Game has finished downloading!")
+                    .Show();
+                Enums.launcherStatus = LauncherStatus.idle;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error finishing download: {ex}");
+            }
+        }
+        public static void DownloadAg1()
+        {
+            try
+            {
+                Enums.launcherStatus = LauncherStatus.downloading;
+                ag1LaunchButton.IsEnabled = false;
+                string gzip = "AveryGameFinale.zip";
+                WebClient webclient = new WebClient();
+                new ToastContentBuilder()
+                    .AddArgument("action", "viewConversation")
+                    .AddArgument("conversationId", 9813)
+                    .AddText("Avery Game download status")
+                    .AddText("Download started...")
+                    .Show();
+                webclient.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(DownloadAg1CompletedCallback);
+                webclient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(webclientDownloadProgressChanged);
+                webclient.DownloadFileAsync(new Uri("https://www.googleapis.com/drive/v3/files/1FM2BJK6M8xd2y3IIG2n6UwCwRVJ9Qwvp?alt=media&key=AIzaSyD3hsuSxEFnxZkgadbUSPt_iyx8qJ4lwWQ"), Public.userPreferences.InstallPath + "\\" + gzip);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error finishing download: {ex.GetBaseException()}");
+            }
+        }
+        public static void webclientDownloadProgressChanged(Object sender, DownloadProgressChangedEventArgs e)
+        {
+            ag1LaunchLabel.Content = "Installing Avery Game - " + e.ProgressPercentage.ToString() + "%";
+        }
+        
+        public static System.Windows.Controls.Label ag1LaunchLabel;
+        public static System.Windows.Controls.Button ag1LaunchButton;
 
         public static bool IsWindowOpen<T>(string name = "") where T : Window
         {

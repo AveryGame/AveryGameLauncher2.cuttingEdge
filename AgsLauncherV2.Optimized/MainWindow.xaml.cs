@@ -22,9 +22,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using static AgsLauncherV2.Optimized.Services.Enums;
+using System.Windows.Navigation;
 using AgsLauncherV2.Optimized.Services;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
 
 namespace AgsLauncherV2.Optimized
 {
@@ -39,7 +42,29 @@ namespace AgsLauncherV2.Optimized
             //test
             InitializeComponent();
             BasicLogic.CheckAppData();
+            InitializePageHost();
+            InitializePagesOnAppEntry();
+            InitializeVarsOnAppEntry();
+            loadJsonStrings();
+            RPC.InitRPC();
             //AGCloud json = JsonConvert.DeserializeObject<AGCloud>(localAppData + "clientStrings.json");
+        }
+
+        private void InitializePagesOnAppEntry()
+        {
+            Public.uncollapsedSettings = new Pages.Uncollapsed.Settings();
+            Public.uncollapsedBugs = new Pages.Uncollapsed.Bugs();
+            Public.uncollapsedNews = new Pages.Uncollapsed.News();
+            Public.uncollapsedChangelog = new Pages.Uncollapsed.Changelog();
+            Public.uncollapsedHome = new Pages.Uncollapsed.Home();
+            Public.mainWindow = this;
+        }
+
+        private void InitializeVarsOnAppEntry()
+        {
+            RPC.rpcLabel = WelcomeRPCLabel;
+            RPC.pfpImage = pfp;
+            Public.Avgl2cEVersion = ReleaseString.Text;
         }
 
         
@@ -48,30 +73,55 @@ namespace AgsLauncherV2.Optimized
         {
             pageHost.NavigationService.Navigate(Public.uncollapsedHome);
             pageHost.Visibility = Visibility.Visible;
+            HomeButton.Content = "• Home";
+            ChangelogButton.Content = "Changelog";
+            BugsButton.Content = "Bugs";
+            NewsButton.Content = "News";
+            SettingsButton.Content = "Settings";
         }
         
         private void Changelog(object sender, RoutedEventArgs e)
         {
             pageHost.NavigationService.Navigate(Public.uncollapsedChangelog);
             pageHost.Visibility = Visibility.Visible;
+            HomeButton.Content = "Home";
+            ChangelogButton.Content = "• Changelog";
+            BugsButton.Content = "Bugs";
+            NewsButton.Content = "News";
+            SettingsButton.Content = "Settings";
         }
 
         private void Bugs(object sender, RoutedEventArgs e)
         {
             pageHost.NavigationService.Navigate(Public.uncollapsedBugs);
             pageHost.Visibility = Visibility.Visible;
+            HomeButton.Content = "Home";
+            ChangelogButton.Content = "Changelog";
+            BugsButton.Content = "• Bugs";
+            NewsButton.Content = "News";
+            SettingsButton.Content = "Settings";
         }
 
         private void News(object sender, RoutedEventArgs e)
         {
             pageHost.NavigationService.Navigate(Public.uncollapsedNews);
             pageHost.Visibility = Visibility.Visible;
+            HomeButton.Content = "Home";
+            ChangelogButton.Content = "Changelog";
+            BugsButton.Content = "Bugs";
+            NewsButton.Content = "• News";
+            SettingsButton.Content = "Settings";
         }
 
         private void Settings(object sender, RoutedEventArgs e)
         {
             pageHost.NavigationService.Navigate(Public.uncollapsedSettings);
             pageHost.Visibility = Visibility.Visible;
+            HomeButton.Content = "Home";
+            ChangelogButton.Content = "Changelog";
+            BugsButton.Content = "Bugs";
+            NewsButton.Content = "News";
+            SettingsButton.Content = "• Settings";
         }
         // End NavButton logic
 
@@ -105,26 +155,66 @@ namespace AgsLauncherV2.Optimized
             cuttingEdgeNoticeBlackout.IsEnabled = false;
             cuttingEdgeNotice.Visibility = Visibility.Hidden;
             cuttingEdgeNoticeBlackout.Visibility = Visibility.Hidden;
-            cuttingEdgeNotice.Margin = new Thickness(69420, 69420, 69420, 69420);
-            cuttingEdgeNoticeBlackout.Margin = new Thickness(69420, 69420, 69420, 69420);
+            
         }
 
         private async void loadJsonStrings()
         {
             try
             {
-                AGCloud json = JsonConvert.DeserializeObject<AGCloud>(File.ReadAllText(localAppData + "clientStrings.json"));
-                if (json.showCuttingEdgeNotice == true)
+                if (Public.json.showCuttingEdgeNotice == true)
                 {
                     await Task.Delay(250);
                     cuttingEdgeNotice.Visibility = Visibility.Visible;
                     cuttingEdgeNoticeBlackout.Visibility = Visibility.Visible;
                     cuttingEdgeNotice.IsEnabled = true;
                     cuttingEdgeNoticeBlackout.IsEnabled = true;
-                    cuttingEdgeNotice.Margin = new Thickness(0, 0, 0, 0);
-                    cuttingEdgeNoticeBlackout.Margin = new Thickness(0, 0, 0, 0);
-                    AnimationHandler.FadeIn(cuttingEdgeNotice, 0.2, false);
-                    AnimationHandler.FadeIn(cuttingEdgeNoticeBlackout, 0.2, false);
+                    AnimationHandler.FadeIn(cuttingEdgeNotice, 0.2);
+                    AnimationHandler.FadeIn(cuttingEdgeNoticeBlackout, 0.2);
+                }
+                if (Public.userPreferences.CollapseSidebar == true)
+                {
+                    {
+                        pageHost.Margin = new Thickness(88, 16, 56, 30);
+                        AveryGame.Content = "AG";
+                        AveryGame.Margin = new Thickness(5, 15, 0, 0);
+                        AGSLogo.Margin = new Thickness(260, 0, 0, 0);
+                        AnimationHandler.FadeOut(UncollapsedSidebar, 0.2);
+                        AnimationHandler.FadeOut(HomeButton, 0.2);
+                        AnimationHandler.FadeOut(ChangelogButton, 0.2);
+                        AnimationHandler.FadeOut(BugsButton, 0.2);
+                        AnimationHandler.FadeOut(NewsButton, 0.2);
+                        AnimationHandler.FadeOut(SettingsButton, 0.2);
+                        await Task.Delay(200);
+                        HomeButton.Visibility = Visibility.Hidden;
+                        ChangelogButton.Visibility = Visibility.Hidden;
+                        BugsButton.Visibility = Visibility.Hidden;
+                        NewsButton.Visibility = Visibility.Hidden;
+                        SettingsButton.Visibility = Visibility.Hidden;
+                        UncollapsedSidebar.Visibility = Visibility.Hidden;
+                        HomeIcon.Visibility = Visibility.Hidden;
+                        ChangelogIcon.Visibility = Visibility.Hidden;
+                        BugsIcon.Visibility = Visibility.Hidden;
+                        NewsIcon.Visibility = Visibility.Hidden;
+                        SettingsIcon.Visibility = Visibility.Hidden;
+                        HomeButton.IsEnabled = false;
+                        ChangelogButton.IsEnabled = false;
+                        BugsButton.IsEnabled = false;
+                        NewsButton.IsEnabled = false;
+                        SettingsButton.IsEnabled = false;
+                        UncollapsedSidebar.IsEnabled = false;
+                    }
+                }
+                if (!Directory.Exists(Public.userPreferences.InstallPath))
+                {
+                    JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+                    rss["InstallPath"] = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\";
+                    File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+                    Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
+                }
+                if (File.Exists(Public.userPreferences.InstallPath + "\\AveryGameFinale.zip"))
+                {
+                    File.Delete(Public.userPreferences.InstallPath + "\\AveryGameFinale.zip");
                 }
             }
             catch (Exception ex)
@@ -137,8 +227,17 @@ namespace AgsLauncherV2.Optimized
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            launcherStatus = LauncherStatus.initialized;
-            loadJsonStrings();
+            launcherStatus = LauncherStatus.idle;
+            //AnimationHandler.FadeOut(pageLoader, 0.15);
+        }
+
+        private void InitializePageHost()
+        {
+            pageHost.NavigationService.Navigate(Public.uncollapsedHome);
+            pageHost.NavigationService.Navigate(Public.uncollapsedBugs);
+            pageHost.NavigationService.Navigate(Public.uncollapsedChangelog);
+            pageHost.NavigationService.Navigate(Public.uncollapsedNews);
+            pageHost.NavigationService.Navigate(Public.uncollapsedSettings);
         }
         //End unique page logic
     }
