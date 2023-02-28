@@ -30,5 +30,24 @@ namespace AgsLauncherV2.Optimized.Services
             waitingRPC
         }
         public static LauncherStatus launcherStatus;
+        public enum LogType 
+        { 
+            Warn,
+            Info,
+            Error,
+            Debug
+        }
+        public static LogType logType;
+        public static string LogAsString(LogType lt)
+        {
+            return lt switch
+            {
+                LogType.Warn => "![WARN]!: ",
+                LogType.Info => "[INFO]: ",
+                LogType.Error => "!![ERROR]!!: ",
+                LogType.Debug => "[DEBUG]: ",
+                _ => "[INFO]: ",
+            };
+        }
     }
 }

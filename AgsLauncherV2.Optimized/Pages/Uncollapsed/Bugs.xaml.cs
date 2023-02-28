@@ -30,33 +30,11 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         }
 
 
-        // All NavButton logic
-        private void Home(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedHome);
-        }
-
-        private void Changelog(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedChangelog);
-        }
-
-        private void News(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedNews);
-        }
-
-        private void Settings(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedSettings);
-        }
-        // End NavButton logic
-
-
         //Unique page logic
         private void LoadPageSpecificJson()
         {
-            VerSTR.Text = "Game Version " + Public.json.testerGameClientVersion + " - Launcher Version " + Public.json.testerLauncherClientVersion;
+            Logger.Log(LogType.Info, "Setting page-specific JSON for changelog page");
+            VerSTR.Text = "Game Version " + Public.json.devGameClientVersion + " - Launcher Version " + Public.json.devLauncherClientVersion;
             LogLine1.Text = Public.json.bugLogs[0];
             LogLine2.Text = Public.json.bugLogs[1];
             LogLine3.Text = Public.json.bugLogs[2];
@@ -67,6 +45,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
             LogLine8.Text = Public.json.bugLogs[7];
             LogLine9.Text = Public.json.bugLogs[8];
             LogLine10.Text = Public.json.bugLogs[9];
+            Logger.Log(LogType.Info, "Appended all JSON strings to corresponding elements for changelog page");
             // TODO: Find a way to do this in shorter lines
         }
         //End unique page logic

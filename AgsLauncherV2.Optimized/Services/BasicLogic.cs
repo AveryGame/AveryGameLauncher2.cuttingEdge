@@ -22,19 +22,22 @@ namespace AgsLauncherV2.Optimized.Services
     {
         public static void HandleClose(LauncherStatus windowStatus, [Optional] bool force, [Optional] bool useExitCode, [Optional] int exitCode)
         {
+            Logger.Log(LogType.Info, $"HandleClose called, LauncherStatus = {windowStatus}, Force? = {force}, Use exit code? = {useExitCode} Exit code = {exitCode}");
             if (force)
             {
+                Logger.Log(LogType.Info, "Close was forced, shutting down immediately with exit code of 2");
                 Environment.Exit(2);
             }
             if (windowStatus == LauncherStatus.idle)
             {
+                Logger.Log(LogType.Info, "Launcher status is idle");
                 if (force)
                 {
                     if (useExitCode)
                     {
                         _exitCode = exitCode;
                     }
-                    
+                    Logger.Log(LogType.Info, $"Close was forced, shutting down immediately with exit code of {_exitCode}");
                     Environment.Exit(_exitCode);
                 }
                 else
@@ -43,48 +46,56 @@ namespace AgsLauncherV2.Optimized.Services
                     {
                         _exitCode = exitCode;
                     }
-                    
+                    Logger.Log(LogType.Info, $"Close was not forced, shutting down with exit code of {_exitCode}");
                     Environment.Exit(_exitCode);
                 }
             }
             if (windowStatus == LauncherStatus.downloading)
             {
+                Logger.Log(LogType.Info, "Prevented closing, LauncherStatus is downloading");
                 MessageBoxResult result = MessageBox.Show("AveryGame is not done downloading, and exiting will corrupt the download. Are you sure you want to exit?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
+                    Logger.Log(LogType.Info, "User confirmed force shutdown during download shutting down with exit code of 2");
                     HandleClose(LauncherStatus.idle, true, true, 2);
                 }
                 else if (result == MessageBoxResult.No)
                 {
-                    
+                    Logger.Log(LogType.Info, "User denied force shutdown during download");
                 }
             }
         }
         
         public static void CheckAppData()
         {
+            Logger.Log(LogType.Info, "Checking AppData directory");
             if (!Directory.Exists(localAppData))
             {
+                Logger.Log(LogType.Info, "AppData directory does not exist! Creating");
                 CreateAppData();
                 CreateUserPreferences();
                 DownloadAppData();
             }
             else if (Directory.Exists(localAppData))
             {
+                Logger.Log(LogType.Info, "AppData directory exists, downloading JSON strings");
                 DownloadAppData();
             }
         }
         
         public static void DownloadAppData()
         {
+            Logger.Log(LogType.Info, "Initializing WebClient, preparing to download JSON strings");
             WebClient wc = new();
             Public.clientStrings = wc.DownloadString(apiBase + "clientStrings.acs");
             Public.json = JsonConvert.DeserializeObject<AGCloud>(Public.clientStrings);
             Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
+            Logger.Log(LogType.Info, "Completed DownloadAppData(), JSON strings downloaded");
         }
 
         public static void CreateUserPreferences()
         {
+            Logger.Log(LogType.Info, "Creating AGUserPreferences.apr");
             string json = JsonConvert.SerializeObject(new AGUserPreferences
             {
                 CollapseSidebar = false,
@@ -93,7 +104,9 @@ namespace AgsLauncherV2.Optimized.Services
                 Ag1InstallPath = "null",
                 Ag2InstallPath = "null"
             });
+            Logger.Log(LogType.Info, "Writing serialized JSON to AGUserPreferences.apr");
             File.WriteAllText(localAppData + "AGUserPreferences.apr", json);
+            Logger.Log(LogType.Info, "Completed CreateUserPreferences()");
         }
 
         public static void CreateAppData()
@@ -103,22 +116,28 @@ namespace AgsLauncherV2.Optimized.Services
         
         public static void LaunchAg1()
         {
+            Logger.Log(LogType.Info, "Launching Ag1");
             Process runningAg1proc = new Process();
             runningAg1proc.StartInfo.FileName = userPreferences.Ag1InstallPath;
             runningAg1proc.StartInfo.Arguments = userPreferences.Arguments;
             runningAg1proc.StartInfo.WorkingDirectory = userPreferences.InstallPath + "\\Avery Game\\Finale\\";
             runningAg1proc.Start();
+            Logger.Log(LogType.Info, "Completed LaunchAg1()");
         }
 
         private static void DownloadAg1CompletedCallback(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            Logger.Log(LogType.Info, "Ag1 download completed, running callback");
             try
             {
                 ag1LaunchLabel.Content = "Extracting Avery Game";
                 string gzip = "AveryGameFinale.zip";
+                Logger.Log(LogType.Info, "Extracting Ag1");
                 ZipFile.ExtractToDirectory(Public.userPreferences.InstallPath + "\\" + gzip, Public.userPreferences.InstallPath + "\\Avery Game\\");
+                Logger.Log(LogType.Info, "Deleting compressed Ag1");
                 File.Delete(Public.userPreferences.InstallPath + "\\" + gzip);
                 JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
+                Logger.Log(LogType.Info, "Setting AGUserPreferences Ag1InstallPath to exe location");
                 rss["Ag1InstallPath"] = Public.userPreferences.InstallPath + "\\Avery Game\\Finale\\AveryGame.exe";
                 File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
                 Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
@@ -132,16 +151,21 @@ namespace AgsLauncherV2.Optimized.Services
                     .AddText("Avery Game has finished downloading!")
                     .Show();
                 Enums.launcherStatus = LauncherStatus.idle;
+                Logger.Log(LogType.Info, "Completed DownloadAg1CompletedCallback(object sender, System.ComponentModel.AsyncCompletedEventArgs e), set LauncherStatus to idle");
             }
             catch (Exception ex)
             {
+                Logger.Log(LogType.Error, "Error finishing DownloadAg1CompletedCallback(object sender, System.ComponentModel.AsyncCompletedEventArgs e)");
+                Logger.Log(LogType.Error, ex.Message.ToString());
                 MessageBox.Show($"Error finishing download: {ex}");
             }
         }
         public static void DownloadAg1()
         {
+            Logger.Log(LogType.Info, "DownloadAg1 called");
             try
             {
+                Logger.Log(LogType.Info, "Setting LauncherStatus to downloading, disabling button, setting gzip string, initializing WebClient, sending toast");
                 Enums.launcherStatus = LauncherStatus.downloading;
                 ag1LaunchButton.IsEnabled = false;
                 string gzip = "AveryGameFinale.zip";
@@ -152,12 +176,16 @@ namespace AgsLauncherV2.Optimized.Services
                     .AddText("Avery Game download status")
                     .AddText("Download started...")
                     .Show();
+                Logger.Log(LogType.Info, "Setting callbacks for Ag1 download");
                 webclient.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(DownloadAg1CompletedCallback);
                 webclient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(webclientDownloadProgressChanged);
+                Logger.Log(LogType.Info, "Downloading Ag1 from GoogleAPIs");
                 webclient.DownloadFileAsync(new Uri("https://www.googleapis.com/drive/v3/files/1FM2BJK6M8xd2y3IIG2n6UwCwRVJ9Qwvp?alt=media&key=AIzaSyD3hsuSxEFnxZkgadbUSPt_iyx8qJ4lwWQ"), Public.userPreferences.InstallPath + "\\" + gzip);
             }
             catch (Exception ex)
             {
+                Logger.Log(LogType.Error, "Error finishing DownloadAg1()");
+                Logger.Log(LogType.Error, ex.Message.ToString());
                 MessageBox.Show($"Error finishing download: {ex.GetBaseException()}");
             }
         }

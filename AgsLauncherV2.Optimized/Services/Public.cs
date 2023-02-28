@@ -31,6 +31,7 @@ namespace AgsLauncherV2.Optimized.Services
         public static string clientStrings;
         public static AGCloud json;
         public static AGUserPreferences userPreferences;
+        public static string LogPath;
     }
     public class AGCloud
     {

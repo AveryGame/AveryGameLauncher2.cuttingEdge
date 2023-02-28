@@ -26,8 +26,9 @@ namespace AgsLauncherV2.Optimized.Services
         internal static bool bIsRPCEnsured;
         public static void InitRPC()
         {
-            client = new DiscordRpcClient("1023932512612925501");
-            client.Logger = new ConsoleLogger() { Level = LogLevel.Warning };
+            Logger.Log(LogType.Info, "InitRPC called");
+            client = new("1023932512612925501");
+            client.Logger = new ConsoleLogger() { Level = LogLevel.Trace };
             client.OnPresenceUpdate += (sender, e) =>
             {
                 Console.WriteLine("[AVGL2CE]: Recieved presence update from Discord.");
@@ -43,8 +44,9 @@ namespace AgsLauncherV2.Optimized.Services
                 bIsRPCEnsured = false;
                 return;
             };
+            Logger.Log(LogType.Info, "Set connection status events, initializing client.");
             client.Initialize();
-
+            Logger.Log(LogType.Info, "Successfully initialized RPC client, setting presence");
             client.SetPresence(new()
             {
                 Details = "On the home page",
@@ -65,20 +67,26 @@ namespace AgsLauncherV2.Optimized.Services
                     }
                 }
             });
+            Logger.Log(LogType.Info, "Successfully set presence, appending start time to presence");
+            
             client.UpdateStartTime();
+            Logger.Log(LogType.Info, "Completed InitRPC()");
         }
 
         private static async void EnsurePresenceConnection()
         {
+            Logger.Log(LogType.Info, "EnsurePresenceConnection() called for the first time");
             await Task.Delay(15000);
             for (; ; )
             {
                 if (bIsRPCEnsured)
                 {
+                    Logger.Log(LogType.Info, "bIsRPCEnsured is true, waiting 15 seconds to check again");
                     await Task.Delay(15000);
                 }
                 else
                 {
+                    Logger.Log(LogType.Info, "bIsRPCEnsured is false, attempting to reconnect to RPC service");
                     InitRPC();
                 }
             }
@@ -86,6 +94,8 @@ namespace AgsLauncherV2.Optimized.Services
 
         public static void RichPresenceConnectionSuccess()
         {
+            Logger.Log(LogType.Info, $"Presence fully connected for user {client.CurrentUser.Username}#{client.CurrentUser.Discriminator.ToString("0000")}.");
+            Logger.Log(LogType.Info, "Rich presence connection was successful, setting PFP, name, and bIsRPCEnsured");
             bIsRPCEnsured = true;
             rpcLabel.Content = "Welcome, " + client.CurrentUser.Username + "!";
             BitmapImage pfpBmp = new();
@@ -93,10 +103,12 @@ namespace AgsLauncherV2.Optimized.Services
             pfpBmp.UriSource = new(client.CurrentUser.GetAvatarURL(User.AvatarFormat.PNG, User.AvatarSize.x16));
             pfpBmp.EndInit();
             pfpImage.Source = pfpBmp;
+            Logger.Log(LogType.Info, "Completed RichPresenceConnectionSuccess()");
         }
 
         public static void CallRPCUpdateOnPageChange(string pageName)
         {
+            Logger.Log(LogType.Info, "Page changed, updating presence");
             client.SetPresence(new RichPresence()
             {
                 Details = "Browsing the " + pageName + " page",
@@ -117,7 +129,9 @@ namespace AgsLauncherV2.Optimized.Services
                     }
                 }
             });
+            Logger.Log(LogType.Info, "Updated presence, appending timer");
             client.UpdateStartTime();
+            Logger.Log(LogType.Info, "Completed CallRPCUpdateOnPageChange(string pageName)");
         }
     }
 }

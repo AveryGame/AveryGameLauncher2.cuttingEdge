@@ -35,41 +35,52 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         private async void CheckGameExistsLoop()
         {
+            Logger.Log(LogType.Info, "Running CheckGameExistsLoop() for the first time");
             for (; ; )
             {
                 if (Enums.launcherStatus != LauncherStatus.downloading) 
                 {
+                    Logger.Log(LogType.Info, "LauncherStatus is not downloading, continuing check");
                     if (File.Exists(Public.userPreferences.Ag1InstallPath))
                     {
+                        Logger.Log(LogType.Info, "Ag1InstallPath returned a file, setting Ag1LaunchText.Content to 'Launch Avery Game' and setting bAg1Installed to true");
                         Ag1LaunchText.Content = "Launch Avery Game";
                         bAg1Installed = true;
                     }
                     if (!File.Exists(Public.userPreferences.Ag1InstallPath))
                     {
+                        Logger.Log(LogType.Info, "Ag1InstallPath did not return a file, setting Ag1LaunchText.Content to 'Install Avery Game' and setting bAg1Installed to false");
                         Ag1LaunchText.Content = "Install Avery Game";
                         bAg1Installed = false;
                     }
+                    Logger.Log(LogType.Info, "Waiting 5 seconds to check if Ag1 exists again");
                 }
-                await Task.Delay(500);
+                await Task.Delay(5000);
             }
         }
         private void LoadVarsOnPageEntry()
         {
+            Logger.Log(LogType.Info, "Loading variables on page entry for home page, setting BasicLogic ag1 data fields to page objects");
             BasicLogic.ag1LaunchButton = AG1Launch;
             BasicLogic.ag1LaunchLabel = Ag1LaunchText;
             if (File.Exists(userPreferences.Ag1InstallPath))
             {
+                Logger.Log(LogType.Info, "Ag1InstallPath returned a file, setting bAg1Installed to true");
                 bAg1Installed = true;
             }
+            Logger.Log(LogType.Info, "Completed LoadVarsOnPageEntry() for home page");
         }
         private void LaunchButtonLogic(object sender, RoutedEventArgs e)
         {
+            Logger.Log(LogType.Info, "Called LaunchButtonLogic");
             if (bAg1Installed)
             {
+                Logger.Log(LogType.Info, "bAg1Installed returned true, launching Ag1");
                 BasicLogic.LaunchAg1();
             }
             if (!bAg1Installed)
             {
+                Logger.Log(LogType.Info, "bAg1Installed returned false, downloading Ag1");
                 BasicLogic.DownloadAg1();
             }
         }
@@ -96,8 +107,10 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         
         private void LoadJsonOnPageEntry()
         {
+            Logger.Log(LogType.Info, "Loading page-specific JSON for home page");
             if (!File.Exists(Public.userPreferences.Ag1InstallPath))
             {
+                Logger.Log(LogType.Info, "Ag1InstallPath does not return a file, setting Ag1LaunchText.Content to 'Install Avery Game', setting bAg1Installed to false");
                 Ag1LaunchText.Content = "Install Avery Game";
                 bAg1Installed = false;
             }

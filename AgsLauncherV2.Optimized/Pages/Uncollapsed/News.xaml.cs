@@ -30,63 +30,37 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         }
 
 
-        // All NavButton logic
-        private void Home(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedHome);
-        }
-
-        private void Changelog(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedChangelog);
-        }
-
-        private void Bugs(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedBugs);
-        }
-
-        private void Settings(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(uncollapsedSettings);
-        }
-        // End NavButton logic
-
-
         //Unique page logic
         private void LoadPageSpecificJson()
         {
+            Logger.Log(LogType.Info, "Loading page-specific JSON for news page");
             BitmapImage bmp = new();
             bmp.BeginInit();
             bmp.UriSource = new(Public.json.newsImageUrl);
             bmp.EndInit();
+            Logger.Log(LogType.Info, "Sending web request to news image url");
             var req = (HttpWebRequest)WebRequest.Create(Public.json.newsImageUrl);
             req.Method = "HEAD";
             using (var resp = req.GetResponse())
             {
                 if (!resp.ContentType.ToLower().StartsWith("image/"))
                 {
+                    Logger.Log(LogType.Warn, "New image url response did not return an image");
                     NewsImageBorder.Opacity = 0;
                 }
                 else if (resp.ContentType.ToLower().StartsWith("image/"))
                 {
+                    Logger.Log(LogType.Info, "News image url response returned an image");
                     cuttingEdgeLoad.Opacity = 0;
                     bmp.UriSource = new(Public.json.newsImageUrl);
                 }
             }
+            Logger.Log(LogType.Info, "Setting NewsImageBrush to the BitmapImage, setting NewsHeader.Content to the news header, setting NewsText.Text to the news text, setting NewsDate.Text to the news date, pulled data from locally deserialized JSON");
             NewsImageBrush.ImageSource = bmp;
             NewsHeader.Content = Public.json.newsHeader;
             NewsSubheader.Text = Public.json.newsSubheader;
             NewsDate.Text = Public.json.newsDate;
-        }
-        
-        private ImageSource NewsImage()
-        {
-            BitmapImage bmp = new();
-            bmp.BeginInit();
-            bmp.UriSource = new(Public.json.newsImageUrl);
-            bmp.EndInit();
-            return bmp;
+            Logger.Log(LogType.Info, "Completed LoadPageSpecificJson()");
         }
         //End unique page logic
     }
