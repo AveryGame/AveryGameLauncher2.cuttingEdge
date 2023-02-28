@@ -16,17 +16,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using AgsLauncherV2.Optimized.Services;
-using System;
-using System.IO;
-using System.Linq;
-using System.Management;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using static AgsLauncherV2.Optimized.Services.Enums;
-using static AgsLauncherV2.Optimized.Services.Public;
-
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>

@@ -19,18 +19,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Tester|AnyCPU'">
-    <NoWarn>1701;1702;SYSLIB0014;CS0649;IDE1006</NoWarn>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <NoWarn>1701;1702;SYSLIB0014</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Prod|AnyCPU'">
-    <NoWarn>1701;1702;SYSLIB0014;CS0649;IDE1006</NoWarn>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer|AnyCPU'">
-    <NoWarn>1701;1702;SYSLIB0014;CS0649;IDE1006</NoWarn>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <NoWarn>1701;1702;SYSLIB0014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -16,24 +16,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Windows;
-using Newtonsoft.Json;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static AgsLauncherV2.Optimized.Services.Public;
-using System.Net;
-using AgsLauncherV2.Optimized.Services;
-
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>
@@ -74,9 +56,9 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         private void LoadPageSpecificJson()
         {
-            BitmapImage bmp = new BitmapImage();
+            BitmapImage bmp = new();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(Public.json.newsImageUrl);
+            bmp.UriSource = new(Public.json.newsImageUrl);
             bmp.EndInit();
             var req = (HttpWebRequest)WebRequest.Create(Public.json.newsImageUrl);
             req.Method = "HEAD";
@@ -89,7 +71,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
                 else if (resp.ContentType.ToLower().StartsWith("image/"))
                 {
                     cuttingEdgeLoad.Opacity = 0;
-                    bmp.UriSource = new Uri(Public.json.newsImageUrl);
+                    bmp.UriSource = new(Public.json.newsImageUrl);
                 }
             }
             NewsImageBrush.ImageSource = bmp;
@@ -100,9 +82,9 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         
         private ImageSource NewsImage()
         {
-            BitmapImage bmp = new BitmapImage();
+            BitmapImage bmp = new();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(Public.json.newsImageUrl);
+            bmp.UriSource = new(Public.json.newsImageUrl);
             bmp.EndInit();
             return bmp;
         }

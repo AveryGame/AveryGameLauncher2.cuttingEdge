@@ -1,6 +1,6 @@
 ﻿/*
- *AveryGame Launcher
- * Copyright(C) 2022, Avery Fiebig-Dorey & Tristan Gee
+ * AveryGame Launcher
+ *  Copyright (C) 2022, Avery Fiebig-Dorey & Tristan Gee
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,8 +15,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-#pragma warning disable CS0649
 
 namespace AgsLauncherV2.Optimized.Services
 {

@@ -16,21 +16,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using AgsLauncherV2.Optimized.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static AgsLauncherV2.Optimized.Services.Public;
-
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>
@@ -71,7 +56,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         private void LoadPageSpecificJson()
         {
-            VerSTR.Text = "Game Version " + Public.json.devGameClientVersion + " - Launcher Version " + Public.json.devLauncherClientVersion;
+            VerSTR.Text = "Game Version " + Public.json.testerGameClientVersion + " - Launcher Version " + Public.json.testerLauncherClientVersion;
             LogLine1.Text = Public.json.changeLogs[0];
             LogLine2.Text = Public.json.changeLogs[1];
             LogLine3.Text = Public.json.changeLogs[2];

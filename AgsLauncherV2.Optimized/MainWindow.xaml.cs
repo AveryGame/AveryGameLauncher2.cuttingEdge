@@ -16,19 +16,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Net;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using static AgsLauncherV2.Optimized.Services.Enums;
-using System.Windows.Navigation;
-using AgsLauncherV2.Optimized.Services;
-using Newtonsoft.Json;
-using System.IO;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json.Linq;
-
 namespace AgsLauncherV2.Optimized
 {
     /// <summary>
@@ -39,7 +26,6 @@ namespace AgsLauncherV2.Optimized
         private string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
         public MainWindow()
         {
-            //test
             InitializeComponent();
             BasicLogic.CheckAppData();
             InitializePageHost();
@@ -47,16 +33,15 @@ namespace AgsLauncherV2.Optimized
             InitializeVarsOnAppEntry();
             loadJsonStrings();
             RPC.InitRPC();
-            //AGCloud json = JsonConvert.DeserializeObject<AGCloud>(localAppData + "clientStrings.json");
         }
 
         private void InitializePagesOnAppEntry()
         {
-            Public.uncollapsedSettings = new Pages.Uncollapsed.Settings();
-            Public.uncollapsedBugs = new Pages.Uncollapsed.Bugs();
-            Public.uncollapsedNews = new Pages.Uncollapsed.News();
-            Public.uncollapsedChangelog = new Pages.Uncollapsed.Changelog();
-            Public.uncollapsedHome = new Pages.Uncollapsed.Home();
+            Public.uncollapsedSettings = new();
+            Public.uncollapsedBugs = new();
+            Public.uncollapsedNews = new();
+            Public.uncollapsedChangelog = new();
+            Public.uncollapsedHome = new();
             Public.mainWindow = this;
         }
 
@@ -155,7 +140,6 @@ namespace AgsLauncherV2.Optimized
             cuttingEdgeNoticeBlackout.IsEnabled = false;
             cuttingEdgeNotice.Visibility = Visibility.Hidden;
             cuttingEdgeNoticeBlackout.Visibility = Visibility.Hidden;
-            
         }
 
         private async void loadJsonStrings()
@@ -174,11 +158,10 @@ namespace AgsLauncherV2.Optimized
                 }
                 if (Public.userPreferences.CollapseSidebar == true)
                 {
-                    {
-                        pageHost.Margin = new Thickness(88, 16, 56, 30);
+                        pageHost.Margin = new(88, 16, 56, 30);
                         AveryGame.Content = "AG";
-                        AveryGame.Margin = new Thickness(5, 15, 0, 0);
-                        AGSLogo.Margin = new Thickness(260, 0, 0, 0);
+                        AveryGame.Margin = new(5, 15, 0, 0);
+                        AGSLogo.Margin = new(260, 0, 0, 0);
                         AnimationHandler.FadeOut(UncollapsedSidebar, 0.2);
                         AnimationHandler.FadeOut(HomeButton, 0.2);
                         AnimationHandler.FadeOut(ChangelogButton, 0.2);
@@ -203,13 +186,12 @@ namespace AgsLauncherV2.Optimized
                         NewsButton.IsEnabled = false;
                         SettingsButton.IsEnabled = false;
                         UncollapsedSidebar.IsEnabled = false;
-                    }
                 }
                 if (!Directory.Exists(Public.userPreferences.InstallPath))
                 {
-                    JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+                    JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
                     rss["InstallPath"] = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\";
-                    File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+                    File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
                     Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
                 }
                 if (File.Exists(Public.userPreferences.InstallPath + "\\AveryGameFinale.zip"))

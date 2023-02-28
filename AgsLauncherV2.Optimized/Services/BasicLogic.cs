@@ -1,6 +1,6 @@
 ﻿/*
- *AveryGame Launcher
- * Copyright(C) 2022, Avery Fiebig-Dorey & Tristan Gee
+ * AveryGame Launcher
+ *  Copyright (C) 2022, Avery Fiebig-Dorey & Tristan Gee
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,23 +15,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Diagnostics;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Windows;
-using Microsoft.Toolkit.Uwp.Notifications;
-using static AgsLauncherV2.Optimized.Services.Enums;
-using static AgsLauncherV2.Optimized.Services.Public;
-using System.Linq.Expressions;
-using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
 
 namespace AgsLauncherV2.Optimized.Services
 {
@@ -94,15 +77,15 @@ namespace AgsLauncherV2.Optimized.Services
         
         public static void DownloadAppData()
         {
-            WebClient wc = new WebClient();
-            Public.clientStrings = wc.DownloadString(new Uri(apiBase + "clientStrings.json"));
+            WebClient wc = new();
+            Public.clientStrings = wc.DownloadString(apiBase + "clientStrings.acs");
             Public.json = JsonConvert.DeserializeObject<AGCloud>(Public.clientStrings);
-            Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+            Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
         }
 
         public static void CreateUserPreferences()
         {
-            string json = JsonConvert.SerializeObject(new Services.AGUserPreferences
+            string json = JsonConvert.SerializeObject(new AGUserPreferences
             {
                 CollapseSidebar = false,
                 Arguments = "",
@@ -110,15 +93,14 @@ namespace AgsLauncherV2.Optimized.Services
                 Ag1InstallPath = "null",
                 Ag2InstallPath = "null"
             });
-            File.WriteAllText(localAppData + "AGUserPreferences.json", json);
+            File.WriteAllText(localAppData + "AGUserPreferences.apr", json);
         }
-        
+
         public static void CreateAppData()
         {
             Directory.CreateDirectory(localAppData);
         }
-
-        private static TaskCompletionSource<bool> eventHandled;
+        
         public static void LaunchAg1()
         {
             Process runningAg1proc = new Process();
@@ -132,14 +114,13 @@ namespace AgsLauncherV2.Optimized.Services
         {
             try
             {
-                
                 ag1LaunchLabel.Content = "Extracting Avery Game";
                 string gzip = "AveryGameFinale.zip";
                 ZipFile.ExtractToDirectory(Public.userPreferences.InstallPath + "\\" + gzip, Public.userPreferences.InstallPath + "\\Avery Game\\");
                 File.Delete(Public.userPreferences.InstallPath + "\\" + gzip);
-                JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+                JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
                 rss["Ag1InstallPath"] = Public.userPreferences.InstallPath + "\\Avery Game\\Finale\\AveryGame.exe";
-                File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+                File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
                 Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
                 ag1LaunchButton.IsEnabled = true;
                 ag1LaunchLabel.Content = "Launch Avery Game";
@@ -164,7 +145,7 @@ namespace AgsLauncherV2.Optimized.Services
                 Enums.launcherStatus = LauncherStatus.downloading;
                 ag1LaunchButton.IsEnabled = false;
                 string gzip = "AveryGameFinale.zip";
-                WebClient webclient = new WebClient();
+                WebClient webclient = new();
                 new ToastContentBuilder()
                     .AddArgument("action", "viewConversation")
                     .AddArgument("conversationId", 9813)
@@ -183,6 +164,8 @@ namespace AgsLauncherV2.Optimized.Services
         public static void webclientDownloadProgressChanged(Object sender, DownloadProgressChangedEventArgs e)
         {
             ag1LaunchLabel.Content = "Installing Avery Game - " + e.ProgressPercentage.ToString() + "%";
+            double progressAsDouble = (double)e.ProgressPercentage / 100;
+            Public.uncollapsedHome.Ag1ImageTextureFilled.Opacity = progressAsDouble;
         }
         
         public static System.Windows.Controls.Label ag1LaunchLabel;

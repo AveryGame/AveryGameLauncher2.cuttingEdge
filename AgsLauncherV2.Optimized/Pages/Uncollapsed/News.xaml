@@ -40,7 +40,7 @@
         <Image Name="cuttingEdgeLoad" gif:AnimationBehavior.SourceUri="/img/cuttingEdge-Load.gif" Margin="40,74,40,127"/>
         <Border x:Name="NewsImageBorder" CornerRadius="5,5,5,5" Margin="40,77,40,127">
             <Border.Background>
-                <ImageBrush x:Name="NewsImageBrush" ImageSource="/Pages/Uncollapsed/avgl2cetexture(1).png" Opacity="1" Stretch="UniformToFill"/>
+                <ImageBrush x:Name="NewsImageBrush" ImageSource="/img/AVGL2CEPattern.png" Opacity="1" Stretch="UniformToFill"/>
             </Border.Background>
         </Border>
         <TextBlock Name="NewsDate" TextWrapping="Wrap" Text="NewsDate placeholder" Margin="164,304,16,0" FontSize="8" TextAlignment="Right" FontFamily="/Lib/Fonts/Bold/#Rubik" VerticalAlignment="Top" Foreground="White" Opacity="0.4"/>

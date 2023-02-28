@@ -16,30 +16,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Diagnostics;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using static AgsLauncherV2.Optimized.Services.Public;
-using System.Windows.Shapes;
-using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using System.Security.Cryptography;
-using System.IO;
-using AgsLauncherV2.Optimized.Services;
-using Newtonsoft.Json;
-using Microsoft.Toolkit.Uwp.Notifications;
-using System.Threading.Tasks;
-
 namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 {
     /// <summary>
@@ -60,7 +36,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         // Unique page logic
         private void LegalNotice_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Process.Start("explorer", "https://www.kianna.wtf/AveryGameLauncher2License");
+            Process.Start("explorer", "https://www.4drian.software/assets/averygame/launcher/v2/branches/cuttingedge/data/legal/license/");
         }
         private async void CheckGameExistsLoop()
         {
@@ -79,13 +55,13 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         }
         private void OpenFileDialog(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
+            FolderBrowserDialog dlg = new();
             DialogResult result = dlg.ShowDialog();
             if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dlg.SelectedPath))
             {
-                JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+                JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
                 rss["InstallPath"] = dlg.SelectedPath;
-                File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+                File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
                 Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
                 GamePath.Content = "Current install path: " +  dlg.SelectedPath;
             }
@@ -104,17 +80,17 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
 
         private void CollapseCB_Checked(object sender, RoutedEventArgs e)
         {
-            JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+            JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
             rss["CollapseSidebar"] = true;
-            File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+            File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
             Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
         }
 
         private void CollapseCB_Unchecked(object sender, RoutedEventArgs e)
         {
-            JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.json"));
+            JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
             rss["CollapseSidebar"] = false;
-            File.WriteAllText(localAppData + "AGUserPreferences.json", rss.ToString());
+            File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
             Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
         }
 
@@ -142,6 +118,10 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
                     .Show();
             }
         }
+
+        // TODO: Add rpc option
+        // TODO: Add toast option
+        
         private int i = 0;
         // End unique page logic
     }

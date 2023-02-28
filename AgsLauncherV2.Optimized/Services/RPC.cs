@@ -1,11 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows;
-using System.Windows.Media.Imaging;
-using DiscordRPC;
-using DiscordRPC.Logging;
+﻿/*
+ * AveryGame Launcher
+ *  Copyright (C) 2022, Avery Fiebig-Dorey & Tristan Gee
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 namespace AgsLauncherV2.Optimized.Services
 {
@@ -13,7 +22,8 @@ namespace AgsLauncherV2.Optimized.Services
     {
         public static DiscordRpcClient client;
         public static System.Windows.Controls.Label rpcLabel;
-        public static System.Windows.Controls.Image pfpImage;
+        public static Image pfpImage;
+        internal static bool bIsRPCEnsured;
         public static void InitRPC()
         {
             client = new DiscordRpcClient("1023932512612925501");
@@ -27,19 +37,21 @@ namespace AgsLauncherV2.Optimized.Services
             {
                 Console.WriteLine("[AVGL2CE]: Connected to Discord.");
             };
+            EnsurePresenceConnection();
             client.OnConnectionFailed += (sender, e) =>
             {
-                //Application.Current.Dispatcher.Invoke(RichPresenceConnectionFailed, System.Windows.Threading.DispatcherPriority.ContextIdle);
+                bIsRPCEnsured = false;
+                return;
             };
             client.Initialize();
 
-            client.SetPresence(new RichPresence()
+            client.SetPresence(new()
             {
                 Details = "On the home page",
                 Assets = new Assets()
                 {
                     LargeImageKey = "ag2cover",
-                    LargeImageText = "ags+kamo+3.0+dev--cuttingEdge",
+                    LargeImageText = Public.mainWindow.ReleaseString.Text.Split('?')[0],
                     SmallImageKey = "",
                     SmallImageText = ""
                 },
@@ -56,12 +68,29 @@ namespace AgsLauncherV2.Optimized.Services
             client.UpdateStartTime();
         }
 
+        private static async void EnsurePresenceConnection()
+        {
+            await Task.Delay(15000);
+            for (; ; )
+            {
+                if (bIsRPCEnsured)
+                {
+                    await Task.Delay(15000);
+                }
+                else
+                {
+                    InitRPC();
+                }
+            }
+        }
+
         public static void RichPresenceConnectionSuccess()
         {
+            bIsRPCEnsured = true;
             rpcLabel.Content = "Welcome, " + client.CurrentUser.Username + "!";
-            BitmapImage pfpBmp = new BitmapImage();
+            BitmapImage pfpBmp = new();
             pfpBmp.BeginInit();
-            pfpBmp.UriSource = new Uri(client.CurrentUser.GetAvatarURL(User.AvatarFormat.PNG, User.AvatarSize.x16));
+            pfpBmp.UriSource = new(client.CurrentUser.GetAvatarURL(User.AvatarFormat.PNG, User.AvatarSize.x16));
             pfpBmp.EndInit();
             pfpImage.Source = pfpBmp;
         }
@@ -71,10 +100,10 @@ namespace AgsLauncherV2.Optimized.Services
             client.SetPresence(new RichPresence()
             {
                 Details = "Browsing the " + pageName + " page",
-                Assets = new Assets()
+                Assets = new()
                 {
                     LargeImageKey = "ag2cover",
-                    LargeImageText = "ags+kamo+2.8+dev--cuttingEdge",
+                    LargeImageText = Public.mainWindow.ReleaseString.Text.Split('?')[0],
                     SmallImageKey = "",
                     SmallImageText = ""
                 },

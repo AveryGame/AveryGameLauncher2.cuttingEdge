@@ -3,18 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgsLauncherV2.Optimized", "AgsLauncherV2.Optimized\AgsLauncherV2.Optimized.csproj", "{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgsLauncherV2.Optimized", "AgsLauncherV2.Optimized\AgsLauncherV2.Optimized.csproj", "{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Developer|Any CPU = Developer|Any CPU
+		Prod|Any CPU = Prod|Any CPU
+		Tester|Any CPU = Tester|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Developer|Any CPU.ActiveCfg = Developer|Any CPU
+		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Developer|Any CPU.Build.0 = Developer|Any CPU
+		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Tester|Any CPU.ActiveCfg = Tester|Any CPU
+		{794EFA0D-64C3-4C34-AFD6-BAA208A6031B}.Tester|Any CPU.Build.0 = Tester|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

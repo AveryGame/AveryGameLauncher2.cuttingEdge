@@ -20,6 +20,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
       mc:Ignorable="d" 
       d:DesignHeight="404" d:DesignWidth="636"
       Title="Home"
@@ -53,7 +54,8 @@
             </Button.Resources>
             <Button.Content>
                 <Grid>
-                    <Image Name="Ag1ImageTexture" Source="/Pages/Uncollapsed/avgl2cetexture(1).png" Stretch="UniformToFill" Opacity="0.3"></Image>
+                    <Image Name="Ag1ImageTexture" Source="/img/AVGL2CEPattern.png" Stretch="UniformToFill" Opacity="0.3"></Image>
+                    <Image Name="Ag1ImageTextureFilled" Source="/img/AVGL2CEPattern.Filled.png" Stretch="UniformToFill" Opacity="0"></Image>
                     <Label Name="Ag1LaunchText" Content="Launch Avery Game" Foreground="White" Margin="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
                 </Grid>
             </Button.Content>
@@ -90,7 +92,7 @@
         <Button x:Name="AG2Launch" HorizontalAlignment="Center" Height="29" Margin="0,356,0,0" VerticalAlignment="Top" Width="242" Opacity="0.6" FontFamily="/Lib/Fonts/Normal/#Trebuchet MS" BorderBrush="Gainsboro" Foreground="White" Click="LaunchButtonLogic" Visibility="Visible" Background="#FF211F1F" MouseEnter="LaunchButton_Copy_MouseEnter" MouseLeave="LaunchButton_Copy_MouseLeave" IsEnabled="False">
             <Button.Content>
                 <Grid>
-                    <Image Name="Ag2ImageTexture" Source="/Pages/Uncollapsed/avgl2cetexture(1).png" Stretch="UniformToFill" Opacity="0.3"></Image>
+                    <Image Name="Ag2ImageTexture" Source="/img/AVGL2CEPattern.png" Stretch="UniformToFill" Opacity="0.3"></Image>
                     <Label Content="Launch Avery Game  " Foreground="White" Margin="56,2,0,0"></Label>
                     <Label Content="2" Foreground="Purple" Margin="167,2,0,0">
                         <Label.Effect>

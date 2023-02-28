@@ -1,8 +1,20 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
+﻿/*
+ * AveryGame Launcher
+ *  Copyright (C) 2022, Avery Fiebig-Dorey & Tristan Gee
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 namespace AgsLauncherV2.Optimized.Services
 {
@@ -23,7 +35,7 @@ namespace AgsLauncherV2.Optimized.Services
                 Duration = TimeSpan.FromSeconds(timeToFade),
             };
             Storyboard.SetTarget(fadeC, bC);
-            Storyboard.SetTargetProperty(fadeC, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(fadeC, new(System.Windows.Controls.Button.OpacityProperty));
             var sbC = new Storyboard();
             sbC.Children.Add(fadeC);
             sbC.Begin();
@@ -46,7 +58,7 @@ namespace AgsLauncherV2.Optimized.Services
                 Duration = TimeSpan.FromSeconds(timeToFade),
             };
             Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(fade, new(System.Windows.Controls.Button.OpacityProperty));
             var sb = new Storyboard();
             sb.Children.Add(fade);
             sb.Begin();
@@ -66,15 +78,10 @@ namespace AgsLauncherV2.Optimized.Services
                 Duration = TimeSpan.FromSeconds(timeToFade),
             };
             Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(fade, new(System.Windows.Controls.Button.OpacityProperty));
             var sb = new Storyboard();
             sb.Children.Add(fade);
             sb.Begin();
-        }
-
-        public static void BlurAnimation(DependencyObject targetObject, double timeLength, double from, double to)
-        {
-
         }
 
         /// <summary>
@@ -94,7 +101,7 @@ namespace AgsLauncherV2.Optimized.Services
                 Duration = TimeSpan.FromSeconds(time),
             };
             Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new PropertyPath(Button.MarginProperty));
+            Storyboard.SetTargetProperty(fade, new(System.Windows.Controls.Button.MarginProperty));
             var sb = new Storyboard();
             sb.Children.Add(fade);
             sb.Begin();
@@ -107,47 +114,15 @@ namespace AgsLauncherV2.Optimized.Services
         /// <param name="time">The amount of time it will take for the object to reach the desired color</param>
         /// <param name="originatingColor">The origin color of the selected object</param>
         /// <param name="targetColor">The color the object will be at the end of the duration selected</param>
-        public static void ColorAnimation(DependencyObject targetObject, Duration time, Brush originatingColor, Brush targetColor)
+        public static void ColorAnimation(Duration time, Brush originatingColor, Brush targetColor)
         {
-            /*ColorAnimation animation;
-            animation = new ColorAnimation();
-            animation.From = originatingColor;
-            animation.To = targetColor;
-            animation.Duration = time;
-            Storyboard.SetTarget(animation, targetObject);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(Border.BackgroundProperty));
-            var sb = new Storyboard();
-            sb.Children.Add(animation);
-            sb.Begin();
-            ColorAnimation colorChangeAnimation = new ColorAnimation();
-            colorChangeAnimation.From = originatingColor;
-            colorChangeAnimation.To = targetColor;
-            colorChangeAnimation.Duration = time;
-
-            PropertyPath colorTargetPath = new PropertyPath("(Border.Background).(SolidColorBrush.Color)");
-            Storyboard CellBackgroundChangeStory = new Storyboard();
-            Storyboard.SetTarget(colorChangeAnimation, targetObject);
-            Storyboard.SetTargetProperty(colorChangeAnimation, colorTargetPath);
-            CellBackgroundChangeStory.Children.Add(colorChangeAnimation);
-            CellBackgroundChangeStory.Begin();
-            var animation = new BrushAnimation
+            BrushAnimation ba = new()
             {
                 From = originatingColor,
                 To = targetColor,
-                Duration = time,
+                Duration = time
             };
-            Storyboard.SetTarget(animation, targetObject);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(Border.BorderBrushProperty));
-
-            var sb = new Storyboard();
-            sb.Children.Add(animation);
-            sb.Begin();
-            MessageBox.Show("BrushAnimation ran");*/
-            BrushAnimation ba = new BrushAnimation();
-            ba.From = originatingColor;
-            ba.To = targetColor;
-            ba.Duration = time;
-            Storyboard sb = new Storyboard();
+            Storyboard sb = new();
             sb.BeginAnimation(Border.BackgroundProperty, ba);
         }
     }
@@ -161,7 +136,6 @@ namespace AgsLauncherV2.Optimized.Services
                 return typeof(Brush);
             }
         }
-
         public override object GetCurrentValue(object defaultOriginValue,
                                                object defaultDestinationValue,
                                                AnimationClock animationClock)
@@ -176,17 +150,12 @@ namespace AgsLauncherV2.Optimized.Services
         {
             if (!animationClock.CurrentProgress.HasValue)
                 return Brushes.Transparent;
-
-            //use the standard values if From and To are not set 
-            //(it is the value of the given property)
             defaultOriginValue = this.From ?? defaultOriginValue;
             defaultDestinationValue = this.To ?? defaultDestinationValue;
-
             if (animationClock.CurrentProgress.Value == 0)
                 return defaultOriginValue;
             if (animationClock.CurrentProgress.Value == 1)
                 return defaultDestinationValue;
-
             return new VisualBrush(new Border()
             {
                 Width = 1,
@@ -199,13 +168,10 @@ namespace AgsLauncherV2.Optimized.Services
                 }
             });
         }
-
         protected override Freezable CreateInstanceCore()
         {
             return new BrushAnimation();
         }
-
-        //we must define From and To, AnimationTimeline does not have this properties
         public Brush From
         {
             get { return (Brush)GetValue(FromProperty); }
@@ -216,7 +182,6 @@ namespace AgsLauncherV2.Optimized.Services
             get { return (Brush)GetValue(ToProperty); }
             set { SetValue(ToProperty, value); }
         }
-
         public static readonly DependencyProperty FromProperty =
             DependencyProperty.Register("From", typeof(Brush), typeof(BrushAnimation));
         public static readonly DependencyProperty ToProperty =
