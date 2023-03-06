@@ -32,7 +32,7 @@ namespace AgsLauncherV2.Optimized
         
         public MainWindow()
         {
-            Public.Avgl2cEVersion = "ags+kamo+3.0.1+staging+cE?s=br";
+            Public.Avgl2cEVersion = "ags+release+3.0.1+prod+cE?s=br";
             InitializeComponent();
             InitializeApplicationBase();
         }
