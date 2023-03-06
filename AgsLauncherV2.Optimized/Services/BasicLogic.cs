@@ -22,7 +22,7 @@ namespace AgsLauncherV2.Optimized.Services
     {
         public static void HandleClose(LauncherStatus windowStatus, [Optional] bool force, [Optional] bool useExitCode, [Optional] int exitCode)
         {
-            Logger.Log(LogType.Info, $"HandleClose called, LauncherStatus = {windowStatus}, Force? = {force}, Use exit code? = {useExitCode} Exit code = {exitCode}");
+            Logger.Log(LogType.Warn, $"HandleClose called, LauncherStatus = {windowStatus}, Force? = {force}, Use exit code? = {useExitCode} Exit code = {exitCode}");
             if (force)
             {
                 Logger.Log(LogType.Info, "Close was forced, shutting down immediately with exit code of 2");
@@ -37,7 +37,7 @@ namespace AgsLauncherV2.Optimized.Services
                     {
                         _exitCode = exitCode;
                     }
-                    Logger.Log(LogType.Info, $"Close was forced, shutting down immediately with exit code of {_exitCode}");
+                    Logger.Log(LogType.Warn, $"Close was forced, shutting down immediately with exit code of {_exitCode}");
                     Environment.Exit(_exitCode);
                 }
                 else
@@ -52,11 +52,11 @@ namespace AgsLauncherV2.Optimized.Services
             }
             if (windowStatus == LauncherStatus.downloading)
             {
-                Logger.Log(LogType.Info, "Prevented closing, LauncherStatus is downloading");
+                Logger.Log(LogType.Warn, "Prevented closing, LauncherStatus is downloading");
                 MessageBoxResult result = MessageBox.Show("AveryGame is not done downloading, and exiting will corrupt the download. Are you sure you want to exit?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
-                    Logger.Log(LogType.Info, "User confirmed force shutdown during download shutting down with exit code of 2");
+                    Logger.Log(LogType.Warn, "User confirmed force shutdown during download, immediately shutting down with exit code of 2");
                     HandleClose(LauncherStatus.idle, true, true, 2);
                 }
                 else if (result == MessageBoxResult.No)

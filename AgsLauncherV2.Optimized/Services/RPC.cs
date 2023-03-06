@@ -32,7 +32,6 @@ namespace AgsLauncherV2.Optimized.Services
             client.OnPresenceUpdate += (sender, e) =>
             {
                 Console.WriteLine("[AVGL2CE]: Recieved presence update from Discord.");
-                Application.Current.Dispatcher.Invoke(RichPresenceConnectionSuccess, System.Windows.Threading.DispatcherPriority.ContextIdle);
             };
             client.OnConnectionEstablished += (sender, e) =>
             {
@@ -42,7 +41,13 @@ namespace AgsLauncherV2.Optimized.Services
             client.OnConnectionFailed += (sender, e) =>
             {
                 bIsRPCEnsured = false;
+                Logger.Log(LogType.Error, "RPC failed to initialize, immediately halting execution");
                 return;
+            };
+            client.OnReady += (sender, e) =>
+            {
+                Console.WriteLine("[AVGL2CE]: RPC ready.");
+                Application.Current.Dispatcher.Invoke(RichPresenceConnectionSuccess, System.Windows.Threading.DispatcherPriority.ContextIdle);
             };
             Logger.Log(LogType.Info, "Set connection status events, initializing client.");
             client.Initialize();
@@ -86,7 +91,7 @@ namespace AgsLauncherV2.Optimized.Services
                 }
                 else
                 {
-                    Logger.Log(LogType.Info, "bIsRPCEnsured is false, attempting to reconnect to RPC service");
+                    Logger.Log(LogType.Warn, "bIsRPCEnsured is false, attempting to reconnect to RPC service");
                     InitRPC();
                 }
             }
@@ -125,7 +130,6 @@ namespace AgsLauncherV2.Optimized.Services
                     {
                         Label = "Join Server",
                         Url = "https://discord.gg/K5SmweCMNr"
-
                     }
                 }
             });

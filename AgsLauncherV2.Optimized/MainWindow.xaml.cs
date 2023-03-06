@@ -15,6 +15,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using System.Reflection;
 using static AgsLauncherV2.Optimized.Services.Enums.LogType;
 namespace AgsLauncherV2.Optimized
 {
@@ -23,7 +24,12 @@ namespace AgsLauncherV2.Optimized
     /// </summary>
     public partial class MainWindow : Window
     {
+        [DllImport("Kernel32")]
+        public static extern void AllocConsole();
+        [DllImport("Kernel32", SetLastError = true)]
+        public static extern void FreeConsole();
         private string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
+        
         public MainWindow()
         {
             Public.Avgl2cEVersion = "ags+kamo+3.0.1+staging+cE?s=br";
@@ -33,6 +39,13 @@ namespace AgsLauncherV2.Optimized
 
         private async void InitializeApplicationBase()
         {
+            var assemblyConfigurationAttribute = typeof(AgsLauncherV2.Optimized.MainWindow).Assembly.GetCustomAttribute<AssemblyConfigurationAttribute>();
+            BuildConfiguration = assemblyConfigurationAttribute?.Configuration;
+            if (BuildConfiguration == "Developer")
+            {
+                AllocConsole();
+                Console.WriteLine("AgsLauncherV2.Optimized.MainWindow//OnApplicationLoad -- Build configuration is developer. \r\nIf you are not a developer, please delete this. \r\nAveryGame and it's developers are not liable for any damage done to your device.");
+            }
             await AwaitInitializeLogger();
             InitializeVarsOnAppEntry();
             BasicLogic.CheckAppData();
@@ -44,7 +57,7 @@ namespace AgsLauncherV2.Optimized
 
         private static Task AwaitInitializeLogger()
         {
-            Public.LogPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\AveryGame Launcher\\CuttingEdge\\Logs\\{DateTime.Now:HH-mm-ss-MM-yy}.log";
+            Public.LogPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\AveryGame Launcher\\CuttingEdge\\Logs\\{DateTime.Now:dd-MM-yy on HH-mm-ss}.log";
             Logger.InitializeLogger();
             return Task.CompletedTask;
         }

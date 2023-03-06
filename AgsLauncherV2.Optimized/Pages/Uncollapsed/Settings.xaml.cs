@@ -47,15 +47,12 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
             {
                 if (File.Exists(Public.userPreferences.Ag1InstallPath))
                 {
-                    Logger.Log(LogType.Info, "Ag1 install path exists, enabling button");
                     DeleteAg.Visibility = Visibility.Visible;
                 }
                 if (!File.Exists(Public.userPreferences.Ag1InstallPath))
                 {
-                    Logger.Log(LogType.Info, "Ag1 install path does not exist, disabling button");
                     DeleteAg.Visibility = Visibility.Hidden;
                 }
-                Logger.Log(LogType.Info, "Completed checks, waiting 2.5 seconds before checking again");
                 await Task.Delay(2500);
             }
         }

@@ -28,6 +28,7 @@ namespace AgsLauncherV2.Optimized.Services
         public static MainWindow mainWindow;
         public const string apiBase = "https://www.4drian.software/assets/averygame/launcher/v2/branches/cuttingedge/data/";
         public static string Avgl2cEVersion;
+        public static string BuildConfiguration;
         public static string clientStrings;
         public static AGCloud json;
         public static AGUserPreferences userPreferences;
