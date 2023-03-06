@@ -23,7 +23,7 @@
         </Border>
         <Label Name="AveryGame" Content="Avery Game" Foreground="White" FontFamily="Lib/Fonts/Normal/#Trebuchet MS" FontSize="20" Margin="12,15,0,0" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Opacity="1"/>
         <Label Content="Loading..." HorizontalAlignment="Left" Margin="33,422,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" Width="800" Height="28" FontFamily="Lib/Fonts/Bold/#Rubik" Name="WelcomeRPCLabel" Grid.ColumnSpan="2"/>
-        <TextBlock x:Name="ReleaseString" Text="ags+release+3.0.1+prod+cE?s=br" HorizontalAlignment="Center" Margin="0,426,0,0" VerticalAlignment="Top" Width="321" Height="20" FontSize="14" FontFamily="Segoe UI Variable Text Light" Foreground="White" TextAlignment="Right" Grid.Column="1" Opacity="0.06"/>
+        <TextBlock x:Name="ReleaseString" Text="ags+kamo+3.0.2+void+cE?s=br" HorizontalAlignment="Center" Margin="0,426,0,0" VerticalAlignment="Top" Width="321" Height="20" FontSize="14" FontFamily="Segoe UI Variable Text Light" Foreground="White" TextAlignment="Right" Grid.Column="1" Opacity="0.06"/>
         <!--RPC pfp image-->
         <Image Name="pfp" Margin="5,422,444,2" RenderOptions.BitmapScalingMode="Fant"/>
         <Border CornerRadius="7" BorderThickness="2" BorderBrush="#FF121212" Margin="5,422,444,2"/>
