@@ -10,11 +10,11 @@
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>Lib\AppIcon\AGAppIcon.ico</ApplicationIcon>
     <Title>AveryGame Launcher 2 Cutting Edge</Title>
-    <Company>Tristan Gee</Company>
-    <Authors>Tristan Gee</Authors>
+    <Company>AveryGame</Company>
+    <Authors>AveryGame</Authors>
     <Description>Version 3 (Pre-redesign) of the launcher for AveryGame</Description>
     <PackageIcon>AGAppIcon.png</PackageIcon>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <Configurations>Tester;Prod;Developer</Configurations>
   </PropertyGroup>
 
