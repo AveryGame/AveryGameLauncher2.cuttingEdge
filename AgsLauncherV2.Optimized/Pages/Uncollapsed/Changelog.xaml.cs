@@ -34,7 +34,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         private void LoadPageSpecificJson()
         {
             Logger.Log(LogType.Info, "Setting page-specific JSON for changelog page");
-            VerSTR.Text = "Game Version " + Public.json.devGameClientVersion + " - Launcher Version " + Public.json.devLauncherClientVersion;
+            VerSTR.Text = "Game Version " + Public.json.testerGameClientVersion + " - Launcher Version " + Public.json.testerGameClientVersion;
             LogLine1.Text = Public.json.changeLogs[0];
             LogLine2.Text = Public.json.changeLogs[1];
             LogLine3.Text = Public.json.changeLogs[2];
