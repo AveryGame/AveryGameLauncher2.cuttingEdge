@@ -33,6 +33,7 @@ namespace AgsLauncherV2.Optimized.Services
         public static AGCloud json;
         public static AGUserPreferences userPreferences;
         public static string LogPath;
+        public static PastebinAPI.User PbUser;
     }
     public class AGCloud
     {

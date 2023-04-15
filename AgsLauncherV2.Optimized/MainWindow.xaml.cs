@@ -15,6 +15,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Pastebin = PastebinAPI.Pastebin;
 using System.Reflection;
 using static AgsLauncherV2.Optimized.Services.Enums.LogType;
 namespace AgsLauncherV2.Optimized
@@ -74,12 +75,14 @@ namespace AgsLauncherV2.Optimized
             Logger.Log(Info, "Completed InitializePagesOnAppEntry()");
         }
 
-        private void InitializeVarsOnAppEntry()
+        private async void InitializeVarsOnAppEntry()
         {
             Logger.Log(Info, "Setting public variables to new instances of objects");
             RPC.rpcLabel = WelcomeRPCLabel;
             RPC.pfpImage = pfp;
             Public.Avgl2cEVersion = ReleaseString.Text;
+            Pastebin.DevKey = "QY2g-xz1b7FqyReNDhuK0MdBw62ptzQY";
+            Public.PbUser = await Pastebin.LoginAsync("AveryGameCrashPad", "ICanSeeYouSkidder");
             Logger.Log(Info, "Completed InitializeVarsOnAppEntry()");
         }
 

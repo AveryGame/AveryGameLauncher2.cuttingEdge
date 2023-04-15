@@ -16,6 +16,8 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.Net.Http;
+
 namespace AgsLauncherV2.Optimized.Services
 {
     internal class BasicLogic
@@ -194,6 +196,26 @@ namespace AgsLauncherV2.Optimized.Services
             ag1LaunchLabel.Content = "Installing Avery Game - " + e.ProgressPercentage.ToString() + "%";
             double progressAsDouble = (double)e.ProgressPercentage / 100;
             Public.uncollapsedHome.Ag1ImageTextureFilled.Opacity = progressAsDouble;
+        }
+
+        public static async void CrashpadHandle()
+        {
+            //https://ptb.discord.com/api/webhooks/1096698300889038868/5vzV6qKaO9nctZhoksHzWlcd2sIx9DVqqnrIBvqtlRtZt6Pv3UmYW6qc2IArO2txj-NQ
+            PastebinAPI.Paste errorPaste = await PbUser.CreatePasteAsync(File.ReadAllText(Public.LogPath), "AveryGameLauncher2.cuttingEdge crashpad instance at " + DateTime.Now);
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+                    {
+                        { "name", "AveryGame Launcher Logging Webhook" },
+                        { "type", "1" },
+                        { "channel_id", "975664139517194250" },
+                        { "token", "5vzV6qKaO9nctZhoksHzWlcd2sIx9DVqqnrIBvqtlRtZt6Pv3UmYW6qc2IArO2txj-NQ" },
+                        { "guild_id", "907015974669131786" },
+                        { "application_id", "null" },
+                        { "user", "AveryGame Launcher Logging Webhook" },
+                        { "content", $"New crashpad instance created <t:{((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds()}:R> {errorPaste.Url}"}
+                    };
+            var content = new FormUrlEncodedContent(values);
+            await client.PostAsync("https://ptb.discord.com/api/webhooks/1096698300889038868/5vzV6qKaO9nctZhoksHzWlcd2sIx9DVqqnrIBvqtlRtZt6Pv3UmYW6qc2IArO2txj-NQ", content);
         }
         
         public static System.Windows.Controls.Label ag1LaunchLabel;

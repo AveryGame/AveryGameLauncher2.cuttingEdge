@@ -17,6 +17,10 @@
         {
             Console.WriteLine($"Sending to LogFile: {LogAsString(lt)}{message}");
             File.AppendAllText(Public.LogPath, $"{LogAsString(lt)}{message} \r\n");
+            if (lt == LogType.Error)
+            {
+                Services.BasicLogic.CrashpadHandle();
+            }
         }
     }
 }
