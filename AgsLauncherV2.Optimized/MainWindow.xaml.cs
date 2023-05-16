@@ -18,6 +18,8 @@
 using Pastebin = PastebinAPI.Pastebin;
 using System.Reflection;
 using static AgsLauncherV2.Optimized.Services.Enums.LogType;
+using System.Windows.Interop;
+
 namespace AgsLauncherV2.Optimized
 {
     /// <summary>
@@ -83,6 +85,10 @@ namespace AgsLauncherV2.Optimized
             Public.Avgl2cEVersion = ReleaseString.Text;
             Pastebin.DevKey = "QY2g-xz1b7FqyReNDhuK0MdBw62ptzQY";
             Public.PbUser = await Pastebin.LoginAsync("AveryGameCrashPad", "ICanSeeYouSkidder");
+            IntPtr hWnd = new WindowInteropHelper(this).EnsureHandle();
+            var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
+            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
+            DwmSetWindowAttribute(hWnd, attribute, ref preference, sizeof(uint));
             Logger.Log(Info, "Completed InitializeVarsOnAppEntry()");
         }
 
@@ -290,6 +296,31 @@ namespace AgsLauncherV2.Optimized
             pageHost.NavigationService.Navigate(Public.uncollapsedSettings);
             Logger.Log(Info, "Completed InitializePageHost()");
         }
+
+        // The enum flag for DwmSetWindowAttribute's second parameter, which tells the function what attribute to set.
+        // Copied from dwmapi.h
+        public enum DWMWINDOWATTRIBUTE
+        {
+            DWMWA_WINDOW_CORNER_PREFERENCE = 33
+        }
+
+        // The DWM_WINDOW_CORNER_PREFERENCE enum for DwmSetWindowAttribute's third parameter, which tells the function
+        // what value of the enum to set.
+        // Copied from dwmapi.h
+        public enum DWM_WINDOW_CORNER_PREFERENCE
+        {
+            DWMWCP_DEFAULT = 0,
+            DWMWCP_DONOTROUND = 1,
+            DWMWCP_ROUND = 2,
+            DWMWCP_ROUNDSMALL = 3
+        }
+
+        // Import dwmapi.dll and define DwmSetWindowAttribute in C# corresponding to the native function.
+        [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        internal static extern void DwmSetWindowAttribute(IntPtr hwnd,
+                                                         DWMWINDOWATTRIBUTE attribute,
+                                                         ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute,
+                                                         uint cbAttribute);
         //End unique page logic
     }
 }

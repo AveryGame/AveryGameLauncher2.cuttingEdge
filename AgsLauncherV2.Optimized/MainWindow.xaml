@@ -444,7 +444,7 @@
         <!--End loading page animation-->
         <!--!! Needs to be on top !! - Page management content-->
         <Border BorderBrush="#FF121212" BorderThickness="100" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="800" MouseDown="DragBar" Grid.ColumnSpan="2"/>
-        <Button Name="CloseButton" Content="r" Margin="0,1,2,0" VerticalAlignment="Top" Height="14" Click="Close" FontFamily="Marlett" Background="#FF24252B" BorderBrush="#FF24252B" Foreground="White" Padding="0,0,0,0" HorizontalAlignment="Right" Width="14" Grid.Column="1">
+        <Button Name="CloseButton" Content="r" Margin="0,1,4,0" VerticalAlignment="Top" Height="14" Click="Close" FontFamily="Marlett" Background="#FF24252B" BorderBrush="#FF24252B" Foreground="White" Padding="0,0,0,0" HorizontalAlignment="Right" Width="14" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -480,7 +480,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="MinimizeButton" Content="q" FontSize="15" Margin="0,1,19,0" VerticalAlignment="Top" Height="14" Click="Minimize" FontFamily="Marlett" Background="#FF24252B" BorderBrush="#FF24252B" Foreground="White" Padding="0,0,0,0" HorizontalAlignment="Right" Width="14" Grid.Column="1">
+        <Button Name="MinimizeButton" Content="q" FontSize="15" Margin="0,1,22,0" VerticalAlignment="Top" Height="14" Click="Minimize" FontFamily="Marlett" Background="#FF24252B" BorderBrush="#FF24252B" Foreground="White" Padding="0,0,0,0" HorizontalAlignment="Right" Width="14" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="15"/>

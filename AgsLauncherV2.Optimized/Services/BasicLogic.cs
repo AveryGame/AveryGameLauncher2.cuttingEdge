@@ -191,11 +191,17 @@ namespace AgsLauncherV2.Optimized.Services
                 MessageBox.Show($"Error finishing download: {ex.GetBaseException()}");
             }
         }
+        public static double cachedLast;
         public static void webclientDownloadProgressChanged(Object sender, DownloadProgressChangedEventArgs e)
         {
             ag1LaunchLabel.Content = "Installing Avery Game - " + e.ProgressPercentage.ToString() + "%";
             double progressAsDouble = (double)e.ProgressPercentage / 100;
-            Public.uncollapsedHome.Ag1ImageTextureFilled.Opacity = progressAsDouble;
+            if (progressAsDouble != cachedLast)
+            {
+                Public.uncollapsedHome.Ag1ImageTextureFilled.Opacity = progressAsDouble;
+                Logger.Log(LogType.Info, $"Ag1ImageTextureFilled opacity set to {progressAsDouble}");
+            }
+            cachedLast = progressAsDouble;
         }
 
         public static async void CrashpadHandle()
