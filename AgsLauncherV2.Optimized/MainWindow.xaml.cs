@@ -34,7 +34,7 @@ namespace AgsLauncherV2.Optimized
         
         public MainWindow()
         {
-            Avgl2CeVersion = "ags+void+3.0.2+kamo+cE?s=br";
+            Avgl2CeVersion = "ags+release+3.0.2+prod+cE?s=br";
             InitializeComponent();
             InitializeApplicationBase();
         }
