@@ -17,32 +17,32 @@
 */
 using Pastebin = PastebinAPI.Pastebin;
 using System.Reflection;
-using static AgsLauncherV2.Optimized.Services.Enums.LogType;
+using static AgsLauncherV2.Optimized.Services.Enums.LogTypeEnum;
 using System.Windows.Interop;
+using AgsLauncherV2.Optimized.Pages.Uncollapsed;
 
 namespace AgsLauncherV2.Optimized
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         [DllImport("Kernel32")]
-        public static extern void AllocConsole();
-        [DllImport("Kernel32", SetLastError = true)]
-        public static extern void FreeConsole();
-        private string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
+        private static extern void AllocConsole();
+        private readonly string _localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
         
         public MainWindow()
         {
-            Public.Avgl2cEVersion = "ags+void+3.0.2+kamo+cE?s=br";
+            Avgl2CeVersion = "ags+void+3.0.2+kamo+cE?s=br";
             InitializeComponent();
             InitializeApplicationBase();
         }
 
         private async void InitializeApplicationBase()
         {
-            var assemblyConfigurationAttribute = typeof(AgsLauncherV2.Optimized.MainWindow).Assembly.GetCustomAttribute<AssemblyConfigurationAttribute>();
+            await BasicLogic.CheckAppData();
+            var assemblyConfigurationAttribute = typeof(MainWindow).Assembly.GetCustomAttribute<AssemblyConfigurationAttribute>();
             BuildConfiguration = assemblyConfigurationAttribute?.Configuration;
             if (BuildConfiguration == "Developer")
             {
@@ -51,16 +51,12 @@ namespace AgsLauncherV2.Optimized
             }
             await AwaitInitializeLogger();
             InitializeVarsOnAppEntry();
-            BasicLogic.CheckAppData();
-            InitializePageHost();
-            InitializePagesOnAppEntry();
-            loadJsonStrings();
-            RPC.InitRPC();
+            LoadJsonStrings();
         }
 
         private static Task AwaitInitializeLogger()
         {
-            Public.LogPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\AveryGame Launcher\\CuttingEdge\\Logs\\{DateTime.Now:dd-MM-yy on HH-mm-ss}.log";
+            LogPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + $"\\AveryGame Launcher\\CuttingEdge\\Logs\\{DateTime.Now:dd-MM-yy on HH-mm-ss}.log";
             Logger.InitializeLogger();
             return Task.CompletedTask;
         }
@@ -68,25 +64,25 @@ namespace AgsLauncherV2.Optimized
         private void InitializePagesOnAppEntry()
         {
             Logger.Log(Info, "Setting public page variables to new instances of pages");
-            Public.uncollapsedSettings = new();
-            Public.uncollapsedBugs = new();
-            Public.uncollapsedNews = new();
-            Public.uncollapsedChangelog = new();
-            Public.uncollapsedHome = new();
-            Public.mainWindow = this;
+            UncollapsedSettings = new Settings();
+            UncollapsedBugs = new Bugs();
+            UncollapsedNews = new News();
+            UncollapsedChangelog = new Changelog();
+            UncollapsedHome = new Home();
+            Public.MainWindow = this;
             Logger.Log(Info, "Completed InitializePagesOnAppEntry()");
         }
 
         private async void InitializeVarsOnAppEntry()
         {
             Logger.Log(Info, "Setting public variables to new instances of objects");
-            RPC.rpcLabel = WelcomeRPCLabel;
-            RPC.pfpImage = pfp;
-            Public.Avgl2cEVersion = ReleaseString.Text;
+            Rpc.RpcLabel = WelcomeRpcLabel;
+            Rpc.PfpImage = Pfp;
+            Avgl2CeVersion = ReleaseString.Text;
             Pastebin.DevKey = "QY2g-xz1b7FqyReNDhuK0MdBw62ptzQY";
-            Public.PbUser = await Pastebin.LoginAsync("AveryGameCrashPad", "ICanSeeYouSkidder");
-            IntPtr hWnd = new WindowInteropHelper(this).EnsureHandle();
-            var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
+            PbUser = await Pastebin.LoginAsync("AveryGameCrashPad", "ICanSeeYouSkidder");
+            var hWnd = new WindowInteropHelper(this).EnsureHandle();
+            const DWMWINDOWATTRIBUTE attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
             var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
             DwmSetWindowAttribute(hWnd, attribute, ref preference, sizeof(uint));
             Logger.Log(Info, "Completed InitializeVarsOnAppEntry()");
@@ -97,9 +93,9 @@ namespace AgsLauncherV2.Optimized
         private void Home(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "Home button clicked, navigating");
-            pageHost.NavigationService.Navigate(Public.uncollapsedHome);
+            PageHost.NavigationService.Navigate(UncollapsedHome);
             Logger.Log(Info, "Home button navigation complete, setting navigation button text");
-            pageHost.Visibility = Visibility.Visible;
+            PageHost.Visibility = Visibility.Visible;
             HomeButton.Content = "• Home";
             ChangelogButton.Content = "Changelog";
             BugsButton.Content = "Bugs";
@@ -111,9 +107,9 @@ namespace AgsLauncherV2.Optimized
         private void Changelog(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "Changelog button clicked, navigating");
-            pageHost.NavigationService.Navigate(Public.uncollapsedChangelog);
+            PageHost.NavigationService.Navigate(UncollapsedChangelog);
             Logger.Log(Info, "Changelog button navigation complete, setting navigation button text");
-            pageHost.Visibility = Visibility.Visible;
+            PageHost.Visibility = Visibility.Visible;
             HomeButton.Content = "Home";
             ChangelogButton.Content = "• Changelog";
             BugsButton.Content = "Bugs";
@@ -125,9 +121,9 @@ namespace AgsLauncherV2.Optimized
         private void Bugs(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "Bugs button clicked, navigating");
-            pageHost.NavigationService.Navigate(Public.uncollapsedBugs);
+            PageHost.NavigationService.Navigate(UncollapsedBugs);
             Logger.Log(Info, "Bugs button navigation complete, setting navigation button text");
-            pageHost.Visibility = Visibility.Visible;
+            PageHost.Visibility = Visibility.Visible;
             HomeButton.Content = "Home";
             ChangelogButton.Content = "Changelog";
             BugsButton.Content = "• Bugs";
@@ -139,9 +135,9 @@ namespace AgsLauncherV2.Optimized
         private void News(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "News button clicked, navigating");
-            pageHost.NavigationService.Navigate(Public.uncollapsedNews);
+            PageHost.NavigationService.Navigate(UncollapsedNews);
             Logger.Log(Info, "News button navigation complete, setting navigation button text");
-            pageHost.Visibility = Visibility.Visible;
+            PageHost.Visibility = Visibility.Visible;
             HomeButton.Content = "Home";
             ChangelogButton.Content = "Changelog";
             BugsButton.Content = "Bugs";
@@ -153,9 +149,9 @@ namespace AgsLauncherV2.Optimized
         private void Settings(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "Settings button clicked, navigating");
-            pageHost.NavigationService.Navigate(Public.uncollapsedSettings);
+            PageHost.NavigationService.Navigate(UncollapsedSettings);
             Logger.Log(Info, "Settings button navigation complete, setting navigation button text");
-            pageHost.Visibility = Visibility.Visible;
+            PageHost.Visibility = Visibility.Visible;
             HomeButton.Content = "Home";
             ChangelogButton.Content = "Changelog";
             BugsButton.Content = "Bugs";
@@ -168,7 +164,7 @@ namespace AgsLauncherV2.Optimized
         // Basic window logic
         private void Close(object sender, RoutedEventArgs e)
         {
-            BasicLogic.HandleClose(launcherStatus, false, true, 1);
+            BasicLogic.HandleClose(LauncherStatus, false, true, 1);
         }
 
         private void Minimize(object sender, RoutedEventArgs e)
@@ -188,43 +184,43 @@ namespace AgsLauncherV2.Optimized
         // End basic window logic
 
         //Unique page logic
-        private async void acceptCeNotice(object sender, RoutedEventArgs e)
+        private async void AcceptCeNotice(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "cuttingEdge notice accepted, removing notice");
-            AnimationHandler.FadeOut(cuttingEdgeNotice, 0.15);
-            AnimationHandler.FadeOut(cuttingEdgeNoticeBlackout, 0.2);
+            AnimationHandler.FadeOut(CuttingEdgeNotice, 0.15);
+            AnimationHandler.FadeOut(CuttingEdgeNoticeBlackout, 0.2);
             await Task.Delay(200);
-            cuttingEdgeNotice.IsEnabled = false;
-            cuttingEdgeNoticeBlackout.IsEnabled = false;
-            cuttingEdgeNotice.Visibility = Visibility.Hidden;
-            cuttingEdgeNoticeBlackout.Visibility = Visibility.Hidden;
+            CuttingEdgeNotice.IsEnabled = false;
+            CuttingEdgeNoticeBlackout.IsEnabled = false;
+            CuttingEdgeNotice.Visibility = Visibility.Hidden;
+            CuttingEdgeNoticeBlackout.Visibility = Visibility.Hidden;
             Logger.Log(Info, "Completed acceptCeNotice(object sender, RoutedEventArgs e)");
         }
 
-        private async void loadJsonStrings()
+        private async void LoadJsonStrings()
         {
             Logger.Log(Info, "Loading JSON strings");
             try
             {
-                if (Public.json.showCuttingEdgeNotice == true)
+                if (Json.ShowCuttingEdgeNotice)
                 {
                     Logger.Log(Info, "showCuttingEdgeNotice is enabled, showing notice");
                     await Task.Delay(250);
-                    cuttingEdgeNotice.Visibility = Visibility.Visible;
-                    cuttingEdgeNoticeBlackout.Visibility = Visibility.Visible;
-                    cuttingEdgeNotice.IsEnabled = true;
-                    cuttingEdgeNoticeBlackout.IsEnabled = true;
-                    AnimationHandler.FadeIn(cuttingEdgeNotice, 0.2);
-                    AnimationHandler.FadeIn(cuttingEdgeNoticeBlackout, 0.2);
+                    CuttingEdgeNotice.Visibility = Visibility.Visible;
+                    CuttingEdgeNoticeBlackout.Visibility = Visibility.Visible;
+                    CuttingEdgeNotice.IsEnabled = true;
+                    CuttingEdgeNoticeBlackout.IsEnabled = true;
+                    AnimationHandler.FadeIn(CuttingEdgeNotice, 0.2);
+                    AnimationHandler.FadeIn(CuttingEdgeNoticeBlackout, 0.2);
                     Logger.Log(Info, "cuttingEdge notice shown");
                 }
-                if (Public.userPreferences.CollapseSidebar == true)
+                if (UserPreferences.CollapseSidebar)
                 {
                     Logger.Log(Info, "AGUserPreferences specifies CollapseSidebar, setting object positions and visibilities");
-                    pageHost.Margin = new(88, 16, 56, 30);
+                    PageHost.Margin = new Thickness(88, 16, 56, 30);
                         AveryGame.Content = "AG";
-                        AveryGame.Margin = new(5, 15, 0, 0);
-                        AGSLogo.Margin = new(260, 0, 0, 0);
+                        AveryGame.Margin = new Thickness(5, 15, 0, 0);
+                        AgsLogo.Margin = new Thickness(260, 0, 0, 0);
                         AnimationHandler.FadeOut(UncollapsedSidebar, 0.2);
                         AnimationHandler.FadeOut(HomeButton, 0.2);
                         AnimationHandler.FadeOut(ChangelogButton, 0.2);
@@ -251,19 +247,19 @@ namespace AgsLauncherV2.Optimized
                         UncollapsedSidebar.IsEnabled = false;
                     Logger.Log(Info, "Finished setting object positions and visibilities for AGUserPreferences' CollapseSidebar specification");
                 }
-                if (!Directory.Exists(Public.userPreferences.InstallPath))
+                if (!Directory.Exists(UserPreferences.InstallPath))
                 {
                     Logger.Log(Info, "InstallPath does not exist, creating");
-                    JObject rss = JObject.Parse(File.ReadAllText(localAppData + "AGUserPreferences.apr"));
+                    var rss = JObject.Parse(await File.ReadAllTextAsync(_localAppData + "AGUserPreferences.apr"));
                     rss["InstallPath"] = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\";
-                    File.WriteAllText(localAppData + "AGUserPreferences.apr", rss.ToString());
-                    Public.userPreferences = JsonConvert.DeserializeObject<AGUserPreferences>(rss.ToString());
+                    await File.WriteAllTextAsync(_localAppData + "AGUserPreferences.apr", rss.ToString());
+                    UserPreferences = JsonConvert.DeserializeObject<AgUserPreferences>(rss.ToString());
                     Logger.Log(Info, "InstallPath created, JSON value set as well");
                 }
-                if (File.Exists(Public.userPreferences.InstallPath + "\\AveryGameFinale.zip"))
+                if (File.Exists(UserPreferences.InstallPath + "\\AveryGameFinale.zip"))
                 {
                     Logger.Log(Info, "Found 1 unfinished install, deleting");
-                    File.Delete(Public.userPreferences.InstallPath + "\\AveryGameFinale.zip");
+                    File.Delete(UserPreferences.InstallPath + "\\AveryGameFinale.zip");
                     Logger.Log(Info, "Deleted 1 unfinished install");
                 }
                 Logger.Log(Info, "Completed loadJsonStrings()");
@@ -271,29 +267,33 @@ namespace AgsLauncherV2.Optimized
             catch (Exception ex)
             {
                 Logger.Log(Error, "Error loading JSON strings!");
-                Logger.Log(Error, ex.Message.ToString());
-                MessageBox.Show(ex.Message.Normalize().ToString());
+                Logger.Log(Error, ex.Message);
+                MessageBox.Show(ex.Message.Normalize());
                 await Task.Delay(1000);
                 Logger.Log(Info, "Attempting JSON string load again");
-                loadJsonStrings();
+                LoadJsonStrings();
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Logger.Log(Info, "App window loaded, setting LauncherStatus to idle");
-            launcherStatus = LauncherStatus.idle;
+            PageHost.Visibility = Visibility.Hidden;
+            InitializePagesOnAppEntry();
+            InitializePageHost();
+            Rpc.InitRpc();
+            LauncherStatus = LauncherStatusEnum.Idle;
             Logger.Log(Info, "Completed Window_Loaded(object sender, RoutedEventArgs e)");
         }
 
         private void InitializePageHost()
         {
             Logger.Log(Info, "Navigating to all pages at once to avoid hitching");
-            pageHost.NavigationService.Navigate(Public.uncollapsedHome);
-            pageHost.NavigationService.Navigate(Public.uncollapsedBugs);
-            pageHost.NavigationService.Navigate(Public.uncollapsedChangelog);
-            pageHost.NavigationService.Navigate(Public.uncollapsedNews);
-            pageHost.NavigationService.Navigate(Public.uncollapsedSettings);
+            PageHost.NavigationService.Navigate(UncollapsedHome);
+            PageHost.NavigationService.Navigate(UncollapsedBugs);
+            PageHost.NavigationService.Navigate(UncollapsedChangelog);
+            PageHost.NavigationService.Navigate(UncollapsedNews);
+            PageHost.NavigationService.Navigate(UncollapsedSettings);
             Logger.Log(Info, "Completed InitializePageHost()");
         }
 
@@ -317,7 +317,7 @@ namespace AgsLauncherV2.Optimized
 
         // Import dwmapi.dll and define DwmSetWindowAttribute in C# corresponding to the native function.
         [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        internal static extern void DwmSetWindowAttribute(IntPtr hwnd,
+        private static extern void DwmSetWindowAttribute(IntPtr hwnd,
                                                          DWMWINDOWATTRIBUTE attribute,
                                                          ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute,
                                                          uint cbAttribute);

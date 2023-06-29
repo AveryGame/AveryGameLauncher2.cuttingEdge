@@ -18,41 +18,41 @@
 
 namespace AgsLauncherV2.Optimized.Services
 {
-    internal class Public
+    internal static class Public
     {
-        public static Pages.Uncollapsed.Home uncollapsedHome;
-        public static Pages.Uncollapsed.Changelog uncollapsedChangelog;
-        public static Pages.Uncollapsed.Bugs uncollapsedBugs;
-        public static Pages.Uncollapsed.News uncollapsedNews;
-        public static Pages.Uncollapsed.Settings uncollapsedSettings;
-        public static MainWindow mainWindow;
-        public const string apiBase = "https://www.4drian.software/assets/averygame/launcher/v2/branches/cuttingedge/data/";
-        public static string Avgl2cEVersion;
+        public static Pages.Uncollapsed.Home UncollapsedHome;
+        public static Pages.Uncollapsed.Changelog UncollapsedChangelog;
+        public static Pages.Uncollapsed.Bugs UncollapsedBugs;
+        public static Pages.Uncollapsed.News UncollapsedNews;
+        public static Pages.Uncollapsed.Settings UncollapsedSettings;
+        public static MainWindow MainWindow;
+        public const string ApiBase = "https://www.4drian.software/assets/averygame/launcher/v2/branches/cuttingedge/data/";
+        public static string Avgl2CeVersion;
         public static string BuildConfiguration;
-        public static string clientStrings;
-        public static AGCloud json;
-        public static AGUserPreferences userPreferences;
+        public static string ClientStrings;
+        public static AgCloud Json;
+        public static AgUserPreferences UserPreferences;
         public static string LogPath;
         public static PastebinAPI.User PbUser;
     }
-    public class AGCloud
+    public class AgCloud
     {
-        public bool showCuttingEdgeNotice { get; set; }
-        public string prodLauncherClientVersion { get; set; }
-        public string testerLauncherClientVersion { get; set; }
-        public string devLauncherClientVersion { get; set; }
-        public string prodGameClientVersion { get; set; }
-        public string testerGameClientVersion { get; set; }
-        public string devGameClientVersion { get; set; }
-        public List<string> bugLogs { get; set; }
-        public List<string> changeLogs { get; set; }
-        public string newsImageUrl { get; set; }
-        public string newsHeader { get; set; }
-        public string newsSubheader { get; set; }
-        public string newsDate { get; set; }
+        public bool ShowCuttingEdgeNotice { get; set; }
+        public string ProdLauncherClientVersion { get; set; }
+        public string TesterLauncherClientVersion { get; set; }
+        public string DevLauncherClientVersion { get; set; }
+        public string ProdGameClientVersion { get; set; }
+        public string TesterGameClientVersion { get; set; }
+        public string DevGameClientVersion { get; set; }
+        public List<string> BugLogs { get; set; }
+        public List<string> ChangeLogs { get; set; }
+        public string NewsImageUrl { get; set; }
+        public string NewsHeader { get; set; }
+        public string NewsSubheader { get; set; }
+        public string NewsDate { get; set; }
     }
 
-    public class AGUserPreferences
+    public class AgUserPreferences
     {
         public bool CollapseSidebar { get; set; }
         public string Arguments { get; set; }

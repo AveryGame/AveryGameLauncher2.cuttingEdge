@@ -21,7 +21,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class Home : Page
+    public partial class Home
     {
         public Home()
         {
@@ -35,49 +35,53 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         private async void CheckGameExistsLoop()
         {
-            Logger.Log(LogType.Info, "Running CheckGameExistsLoop() for the first time");
+            Logger.Log(LogTypeEnum.Info, "Running CheckGameExistsLoop() for the first time");
             for (; ; )
             {
-                if (Enums.launcherStatus != LauncherStatus.downloading) 
+                if (LauncherStatus != LauncherStatusEnum.Downloading) 
                 {
-                    if (File.Exists(Public.userPreferences.Ag1InstallPath))
+                    if (File.Exists(UserPreferences.Ag1InstallPath))
                     {
                         Ag1LaunchText.Content = "Launch Avery Game";
-                        bAg1Installed = true;
+                        BAg1Installed = true;
                     }
-                    if (!File.Exists(Public.userPreferences.Ag1InstallPath))
+                    if (!File.Exists(UserPreferences.Ag1InstallPath))
                     {
                         Ag1LaunchText.Content = "Install Avery Game";
-                        bAg1Installed = false;
+                        BAg1Installed = false;
                     }
                 }
+                
                 await Task.Delay(5000);
             }
         }
         private void LoadVarsOnPageEntry()
         {
-            Logger.Log(LogType.Info, "Loading variables on page entry for home page, setting BasicLogic ag1 data fields to page objects");
-            BasicLogic.ag1LaunchButton = AG1Launch;
-            BasicLogic.ag1LaunchLabel = Ag1LaunchText;
-            if (File.Exists(userPreferences.Ag1InstallPath))
+            Logger.Log(LogTypeEnum.Info, "Loading variables on page entry for home page, setting BasicLogic ag1 data fields to page objects");
+            BasicLogic.Ag1LaunchButton = AG1Launch;
+            BasicLogic.Ag1LaunchLabel = Ag1LaunchText;
+            
+            if (File.Exists(UserPreferences.Ag1InstallPath))
             {
-                Logger.Log(LogType.Info, "Ag1InstallPath returned a file, setting bAg1Installed to true");
-                bAg1Installed = true;
+                Logger.Log(LogTypeEnum.Info, "Ag1InstallPath returned a file, setting bAg1Installed to true");
+                BAg1Installed = true;
             }
-            Logger.Log(LogType.Info, "Completed LoadVarsOnPageEntry() for home page");
+            
+            Logger.Log(LogTypeEnum.Info, "Completed LoadVarsOnPageEntry() for home page");
         }
         private void LaunchButtonLogic(object sender, RoutedEventArgs e)
         {
-            Logger.Log(LogType.Info, "Called LaunchButtonLogic");
-            if (bAg1Installed)
+            Logger.Log(LogTypeEnum.Info, "Called LaunchButtonLogic");
+            switch (BAg1Installed)
             {
-                Logger.Log(LogType.Info, "bAg1Installed returned true, launching Ag1");
-                BasicLogic.LaunchAg1();
-            }
-            if (!bAg1Installed)
-            {
-                Logger.Log(LogType.Info, "bAg1Installed returned false, downloading Ag1");
-                BasicLogic.DownloadAg1();
+                case (true):
+                    Logger.Log(LogTypeEnum.Info, "bAg1Installed returned true, launching Ag1");
+                    BasicLogic.LaunchAg1();
+                    break;
+                default:
+                    Logger.Log(LogTypeEnum.Info, "bAg1Installed returned false, downloading Ag1");
+                    BasicLogic.DownloadAg1();
+                    break;
             }
         }
 
@@ -103,16 +107,19 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         
         private void LoadJsonOnPageEntry()
         {
-            Logger.Log(LogType.Info, "Loading page-specific JSON for home page");
-            if (!File.Exists(Public.userPreferences.Ag1InstallPath))
+            Logger.Log(LogTypeEnum.Info, "Loading page-specific JSON for home page");
+
+            if (File.Exists(UserPreferences.Ag1InstallPath))
             {
-                Logger.Log(LogType.Info, "Ag1InstallPath does not return a file, setting Ag1LaunchText.Content to 'Install Avery Game', setting bAg1Installed to false");
+                Logger.Log(LogTypeEnum.Info,
+                        "Ag1InstallPath does not return a file, setting Ag1LaunchText.Content to 'Install Avery Game', setting bAg1Installed to false");
                 Ag1LaunchText.Content = "Install Avery Game";
-                bAg1Installed = false;
+                BAg1Installed = false;
             }
         }
 
-        public bool bAg1Installed;
+        public bool BAg1Installed;
+        private static readonly string LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\AveryGame Launcher\\CuttingEdge\\";
         //End unique page logic
     }
 }

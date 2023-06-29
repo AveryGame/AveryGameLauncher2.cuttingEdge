@@ -18,7 +18,7 @@
 
 namespace AgsLauncherV2.Optimized.Services
 {
-    internal class AnimationHandler
+    internal static class AnimationHandler
     {
         /// <summary>
         /// Fades in an inputted XAML object
@@ -27,15 +27,14 @@ namespace AgsLauncherV2.Optimized.Services
         /// <param name="timeToFade">The amount time to fade the object in</param>
         public static void FadeIn(DependencyObject targetObject, double timeToFade)
         {
-            var bC = targetObject;
             var fadeC = new DoubleAnimation()
             {
                 From = 0,
                 To = 1,
                 Duration = TimeSpan.FromSeconds(timeToFade),
             };
-            Storyboard.SetTarget(fadeC, bC);
-            Storyboard.SetTargetProperty(fadeC, new(System.Windows.Controls.Button.OpacityProperty));
+            Storyboard.SetTarget(fadeC, targetObject);
+            Storyboard.SetTargetProperty(fadeC, new PropertyPath(UIElement.OpacityProperty));
             var sbC = new Storyboard();
             sbC.Children.Add(fadeC);
             sbC.Begin();
@@ -50,15 +49,14 @@ namespace AgsLauncherV2.Optimized.Services
         /// <param name="targetOpacity">The opacity at which the animation will end</param>
         public static void FadeAnimation(DependencyObject targetObject, double timeToFade, double originatingOpacity, double targetOpacity)
         {
-            var b = targetObject;
             var fade = new DoubleAnimation()
             {
                 From = originatingOpacity,
                 To = targetOpacity,
                 Duration = TimeSpan.FromSeconds(timeToFade),
             };
-            Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new(System.Windows.Controls.Button.OpacityProperty));
+            Storyboard.SetTarget(fade, targetObject);
+            Storyboard.SetTargetProperty(fade, new PropertyPath(UIElement.OpacityProperty));
             var sb = new Storyboard();
             sb.Children.Add(fade);
             sb.Begin();
@@ -70,72 +68,24 @@ namespace AgsLauncherV2.Optimized.Services
         /// <param name="timeToFade">The amount time to fade the object out</param>
         public static void FadeOut(DependencyObject targetObject, double timeToFade)
         {
-            var b = targetObject;
             var fade = new DoubleAnimation()
             {
                 From = 1,
                 To = 0,
                 Duration = TimeSpan.FromSeconds(timeToFade),
             };
-            Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new(System.Windows.Controls.Button.OpacityProperty));
+            Storyboard.SetTarget(fade, targetObject);
+            Storyboard.SetTargetProperty(fade, new PropertyPath(UIElement.OpacityProperty));
             var sb = new Storyboard();
             sb.Children.Add(fade);
             sb.Begin();
-        }
-
-        /// <summary>
-        /// Moves an XAML object to any position over a set amount of time
-        /// </summary>
-        /// <param name="targetObject">The object to move</param>
-        /// <param name="time">The amount of time it will take for the object to reach it's destination</param>
-        /// <param name="from">The original position of the object. Can be object.Margin</param>
-        /// <param name="to">The destination the object will get to at the end of the time inputted</param>
-        public static void MovementAnimation(DependencyObject targetObject, double time, Thickness from, Thickness to)
-        {
-            var b = targetObject;
-            var fade = new ThicknessAnimation()
-            {
-                From = from,
-                To = to,
-                Duration = TimeSpan.FromSeconds(time),
-            };
-            Storyboard.SetTarget(fade, b);
-            Storyboard.SetTargetProperty(fade, new(System.Windows.Controls.Button.MarginProperty));
-            var sb = new Storyboard();
-            sb.Children.Add(fade);
-            sb.Begin();
-        }
-
-        /// <summary>
-        /// Animates color of a given XAML object
-        /// </summary>
-        /// <param name="targetObject">The object to animate color</param>
-        /// <param name="time">The amount of time it will take for the object to reach the desired color</param>
-        /// <param name="originatingColor">The origin color of the selected object</param>
-        /// <param name="targetColor">The color the object will be at the end of the duration selected</param>
-        public static void ColorAnimation(Duration time, Brush originatingColor, Brush targetColor)
-        {
-            BrushAnimation ba = new()
-            {
-                From = originatingColor,
-                To = targetColor,
-                Duration = time
-            };
-            Storyboard sb = new();
-            sb.BeginAnimation(Border.BackgroundProperty, ba);
         }
     }
 
     public class BrushAnimation : AnimationTimeline
     {
-        public override Type TargetPropertyType
-        {
-            get
-            {
-                return typeof(Brush);
-            }
-        }
+        public override Type TargetPropertyType => typeof(Brush);
+
         public override object GetCurrentValue(object defaultOriginValue,
                                                object defaultDestinationValue,
                                                AnimationClock animationClock)
@@ -144,29 +94,30 @@ namespace AgsLauncherV2.Optimized.Services
                                    defaultDestinationValue as Brush,
                                    animationClock);
         }
-        public object GetCurrentValue(Brush defaultOriginValue,
+
+        private object GetCurrentValue(Brush defaultOriginValue,
                                       Brush defaultDestinationValue,
-                                      AnimationClock animationClock)
+                                      Clock animationClock)
         {
             if (!animationClock.CurrentProgress.HasValue)
                 return Brushes.Transparent;
             defaultOriginValue = this.From ?? defaultOriginValue;
             defaultDestinationValue = this.To ?? defaultDestinationValue;
-            if (animationClock.CurrentProgress.Value == 0)
-                return defaultOriginValue;
-            if (animationClock.CurrentProgress.Value == 1)
-                return defaultDestinationValue;
-            return new VisualBrush(new Border()
+            return animationClock.CurrentProgress.Value switch
             {
-                Width = 1,
-                Height = 1,
-                Background = defaultOriginValue,
-                Child = new Border()
+                0 => defaultOriginValue,
+                1 => defaultDestinationValue,
+                _ => new VisualBrush(new Border()
                 {
-                    Background = defaultDestinationValue,
-                    Opacity = animationClock.CurrentProgress.Value,
-                }
-            });
+                    Width = 1,
+                    Height = 1,
+                    Background = defaultOriginValue,
+                    Child = new Border()
+                    {
+                        Background = defaultDestinationValue, Opacity = animationClock.CurrentProgress.Value,
+                    }
+                })
+            };
         }
         protected override Freezable CreateInstanceCore()
         {
@@ -174,17 +125,17 @@ namespace AgsLauncherV2.Optimized.Services
         }
         public Brush From
         {
-            get { return (Brush)GetValue(FromProperty); }
-            set { SetValue(FromProperty, value); }
+            get => (Brush)GetValue(FromProperty);
+            set => SetValue(FromProperty, value);
         }
         public Brush To
         {
-            get { return (Brush)GetValue(ToProperty); }
-            set { SetValue(ToProperty, value); }
+            get => (Brush)GetValue(ToProperty);
+            set => SetValue(ToProperty, value);
         }
         public static readonly DependencyProperty FromProperty =
-            DependencyProperty.Register("From", typeof(Brush), typeof(BrushAnimation));
+            DependencyProperty.Register(nameof(From), typeof(Brush), typeof(BrushAnimation));
         public static readonly DependencyProperty ToProperty =
-            DependencyProperty.Register("To", typeof(Brush), typeof(BrushAnimation));
+            DependencyProperty.Register(nameof(To), typeof(Brush), typeof(BrushAnimation));
     }
 }

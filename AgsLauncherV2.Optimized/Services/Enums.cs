@@ -20,32 +20,32 @@ namespace AgsLauncherV2.Optimized.Services
 {
     internal class Enums
     {
-        public enum LauncherStatus
+        public enum LauncherStatusEnum
         {
-            intializing,
-            idle,
-            downloading,
-            gameLaunched,
-            updating,
-            waitingRPC
+            Intializing,
+            Idle,
+            Downloading,
+            GameLaunched,
+            Updating,
+            WaitingRpc
         }
-        public static LauncherStatus launcherStatus;
-        public enum LogType 
+        public static LauncherStatusEnum LauncherStatus;
+        public enum LogTypeEnum
         { 
             Warn,
             Info,
             Error,
             Debug
         }
-        public static LogType logType;
-        public static string LogAsString(LogType lt)
+        public static LogTypeEnum LogType;
+        public static string LogAsString(LogTypeEnum lt)
         {
             return lt switch
             {
-                LogType.Warn => "![WARN]!: ",
-                LogType.Info => "[INFO]: ",
-                LogType.Error => "!![ERROR]!!: ",
-                LogType.Debug => "[DEBUG]: ",
+                LogTypeEnum.Warn => "![WARN]!: ",
+                LogTypeEnum.Info => "[INFO]: ",
+                LogTypeEnum.Error => "!![ERROR]!!: ",
+                LogTypeEnum.Debug => "[DEBUG]: ",
                 _ => "[INFO]: ",
             };
         }

@@ -21,7 +21,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
     /// <summary>
     /// Interaction logic for Bugs.xaml
     /// </summary>
-    public partial class Bugs : Page
+    public partial class Bugs
     {
         public Bugs()
         {
@@ -33,19 +33,19 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         private void LoadPageSpecificJson()
         {
-            Logger.Log(LogType.Info, "Setting page-specific JSON for changelog page");
-            VerSTR.Text = "Game Version " + Public.json.devGameClientVersion + " - Launcher Version " + Public.json.devLauncherClientVersion;
-            LogLine1.Text = Public.json.bugLogs[0];
-            LogLine2.Text = Public.json.bugLogs[1];
-            LogLine3.Text = Public.json.bugLogs[2];
-            LogLine4.Text = Public.json.bugLogs[3];
-            LogLine5.Text = Public.json.bugLogs[4];
-            LogLine6.Text = Public.json.bugLogs[5];
-            LogLine7.Text = Public.json.bugLogs[6];
-            LogLine8.Text = Public.json.bugLogs[7];
-            LogLine9.Text = Public.json.bugLogs[8];
-            LogLine10.Text = Public.json.bugLogs[9];
-            Logger.Log(LogType.Info, "Appended all JSON strings to corresponding elements for changelog page");
+            Logger.Log(LogTypeEnum.Info, "Setting page-specific JSON for changelog page");
+            VerStr.Text = "Game Version " + Json.DevGameClientVersion + " - Launcher Version " + Json.DevLauncherClientVersion;
+            LogLine1.Text = Json.BugLogs[0];
+            LogLine2.Text = Json.BugLogs[1];
+            LogLine3.Text = Json.BugLogs[2];
+            LogLine4.Text = Json.BugLogs[3];
+            LogLine5.Text = Json.BugLogs[4];
+            LogLine6.Text = Json.BugLogs[5];
+            LogLine7.Text = Json.BugLogs[6];
+            LogLine8.Text = Json.BugLogs[7];
+            LogLine9.Text = Json.BugLogs[8];
+            LogLine10.Text = Json.BugLogs[9];
+            Logger.Log(LogTypeEnum.Info, "Appended all JSON strings to corresponding elements for changelog page");
             // TODO: Find a way to do this in shorter lines
         }
         //End unique page logic

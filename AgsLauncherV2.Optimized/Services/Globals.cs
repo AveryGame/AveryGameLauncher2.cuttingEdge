@@ -32,7 +32,6 @@ global using System.Windows.Forms;
 global using System.IO.Compression;
 global using System.Threading.Tasks;
 global using System.Windows.Controls;
-global using System.Windows.Navigation;
 global using System.Collections.Generic;
 global using System.Windows.Media.Imaging;
 global using System.Runtime.InteropServices;

@@ -21,7 +21,7 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
     /// <summary>
     /// Interaction logic for News.xaml
     /// </summary>
-    public partial class News : Page
+    public partial class News
     {
         public News()
         {
@@ -33,34 +33,34 @@ namespace AgsLauncherV2.Optimized.Pages.Uncollapsed
         //Unique page logic
         private void LoadPageSpecificJson()
         {
-            Logger.Log(LogType.Info, "Loading page-specific JSON for news page");
+            Logger.Log(LogTypeEnum.Info, "Loading page-specific JSON for news page");
             BitmapImage bmp = new();
             bmp.BeginInit();
-            bmp.UriSource = new(Public.json.newsImageUrl);
+            bmp.UriSource = new Uri(Json.NewsImageUrl);
             bmp.EndInit();
-            Logger.Log(LogType.Info, "Sending web request to news image url");
-            var req = (HttpWebRequest)WebRequest.Create(Public.json.newsImageUrl);
+            Logger.Log(LogTypeEnum.Info, "Sending web request to news image url");
+            var req = (HttpWebRequest)WebRequest.Create(Json.NewsImageUrl);
             req.Method = "HEAD";
             using (var resp = req.GetResponse())
             {
                 if (!resp.ContentType.ToLower().StartsWith("image/"))
                 {
-                    Logger.Log(LogType.Warn, "New image url response did not return an image");
+                    Logger.Log(LogTypeEnum.Warn, "New image url response did not return an image");
                     NewsImageBorder.Opacity = 0;
                 }
                 else if (resp.ContentType.ToLower().StartsWith("image/"))
                 {
-                    Logger.Log(LogType.Info, "News image url response returned an image");
-                    cuttingEdgeLoad.Opacity = 0;
-                    bmp.UriSource = new(Public.json.newsImageUrl);
+                    Logger.Log(LogTypeEnum.Info, "News image url response returned an image");
+                    CuttingEdgeLoad.Opacity = 0;
+                    bmp.UriSource = new Uri(Json.NewsImageUrl);
                 }
             }
-            Logger.Log(LogType.Info, "Setting NewsImageBrush to the BitmapImage, setting NewsHeader.Content to the news header, setting NewsText.Text to the news text, setting NewsDate.Text to the news date, pulled data from locally deserialized JSON");
+            Logger.Log(LogTypeEnum.Info, "Setting NewsImageBrush to the BitmapImage, setting NewsHeader.Content to the news header, setting NewsText.Text to the news text, setting NewsDate.Text to the news date, pulled data from locally deserialized JSON");
             NewsImageBrush.ImageSource = bmp;
-            NewsHeader.Content = Public.json.newsHeader;
-            NewsSubheader.Text = Public.json.newsSubheader;
-            NewsDate.Text = Public.json.newsDate;
-            Logger.Log(LogType.Info, "Completed LoadPageSpecificJson()");
+            NewsHeader.Content = Json.NewsHeader;
+            NewsSubheader.Text = Json.NewsSubheader;
+            NewsDate.Text = Json.NewsDate;
+            Logger.Log(LogTypeEnum.Info, "Completed LoadPageSpecificJson()");
         }
         //End unique page logic
     }

@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AgsLauncherV2.Optimized"
         mc:Ignorable="d"
-        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         Title="AveryGame Launcher V2" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None" Loaded="Window_Loaded">
     <Grid Background="#FF24252B">
         <!--Basic page layout-->
@@ -13,25 +11,25 @@
             <ColumnDefinition Width="19*"/>
             <ColumnDefinition Width="13*"/>
         </Grid.ColumnDefinitions>
-        <Border Name="CollapsedSidebar" BorderBrush="#FF191919" BorderThickness="1000" Margin="0,16,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="44" >
+        <Border Grid.Column="0" Name="CollapsedSidebar" BorderBrush="#FF191919" BorderThickness="1000" Margin="0,16,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="44" >
             <Label Content="Label" HorizontalAlignment="Center" Height="0" VerticalAlignment="Center" Width="0"/>
         </Border>
-        <Border Name="UncollapsedSidebar" BorderBrush="#FF191919" BorderThickness="1000" Margin="0,16,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="144" Opacity="1">
+        <Border Grid.Column="0" Name="UncollapsedSidebar" BorderBrush="#FF191919" BorderThickness="1000" Margin="0,16,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="144" Opacity="1">
             <Label Content="Label" HorizontalAlignment="Center" Height="0" VerticalAlignment="Center" Width="0"/>
         </Border>
-        <Border BorderBrush="#FF121212" BorderThickness="1000" Height="30" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
+        <Border Grid.Column="0" BorderBrush="#FF121212" BorderThickness="1000" Height="30" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
         </Border>
-        <Label Name="AveryGame" Content="Avery Game" Foreground="White" FontFamily="Lib/Fonts/Normal/#Trebuchet MS" FontSize="20" Margin="12,15,0,0" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Opacity="1"/>
-        <Label Content="Loading..." HorizontalAlignment="Left" Margin="33,422,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" Width="800" Height="28" FontFamily="Lib/Fonts/Bold/#Rubik" Name="WelcomeRPCLabel" Grid.ColumnSpan="2"/>
+        <Label Grid.Column="0" Name="AveryGame" Content="Avery Game" Foreground="White" FontFamily="Lib/Fonts/Normal/#Trebuchet MS" FontSize="20" Margin="12,15,0,0" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Opacity="1"/>
+        <Label Grid.Column="0" Content="Loading..." HorizontalAlignment="Left" Margin="33,422,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" Width="800" Height="28" FontFamily="Lib/Fonts/Bold/#Rubik" Name="WelcomeRpcLabel" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="ReleaseString" Text="ags+kamo+3.0.2+void+cE?s=br" HorizontalAlignment="Center" Margin="0,426,0,0" VerticalAlignment="Top" Width="321" Height="20" FontSize="14" FontFamily="Segoe UI Variable Text Light" Foreground="White" TextAlignment="Right" Grid.Column="1" Opacity="0.06"/>
         <!--RPC pfp image-->
-        <Image Name="pfp" Margin="5,422,444,2" RenderOptions.BitmapScalingMode="Fant"/>
-        <Border CornerRadius="7" BorderThickness="2" BorderBrush="#FF121212" Margin="5,422,444,2"/>
-        <Border CornerRadius="7" BorderThickness="4" BorderBrush="#FF121212" Margin="2,420,441,-1"/>
-        <Border BorderThickness="4" BorderBrush="#FF121212" Margin="2,420,441,-1"/>
+        <Image Grid.Column="0" Name="Pfp" Margin="5,422,444,2" RenderOptions.BitmapScalingMode="Fant"/>
+        <Border Grid.Column="0" CornerRadius="7" BorderThickness="2" BorderBrush="#FF121212" Margin="5,422,444,2"/>
+        <Border Grid.Column="0" CornerRadius="7" BorderThickness="4" BorderBrush="#FF121212" Margin="2,420,441,-1"/>
+        <Border Grid.Column="0" BorderThickness="4" BorderBrush="#FF121212" Margin="2,420,441,-1"/>
         <!--End RPC pfp image-->
         <!--Collapsed NavButtons-->
-        <Button Name="ColHomeButton" HorizontalAlignment="Left" Margin="11,50,0,0" VerticalAlignment="Top" Width="20" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Home" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
+        <Button Grid.Column="0" Name="ColHomeButton" HorizontalAlignment="Left" Margin="11,50,0,0" VerticalAlignment="Top" Width="20" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Home" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
             <Image Source="/img/HomeButton.Icon.png"/>
             <Button.Resources>
                 <Style TargetType="Border">
@@ -76,7 +74,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="ColChangelogButton" HorizontalAlignment="Left" Margin="11,80,0,0" VerticalAlignment="Top" Width="20" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Changelog" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
+        <Button Grid.Column="0" Name="ColChangelogButton" HorizontalAlignment="Left" Margin="11,80,0,0" VerticalAlignment="Top" Width="20" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Changelog" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
             <Image Source="/img/ChangelogButton.Icon.png"/>
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -113,7 +111,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="ColBugsButton" HorizontalAlignment="Left" Margin="11,110,0,0" VerticalAlignment="Top" Width="20" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Bugs" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
+        <Button Grid.Column="0" Name="ColBugsButton" HorizontalAlignment="Left" Margin="11,110,0,0" VerticalAlignment="Top" Width="20" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Bugs" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
             <Image Source="/img/BugsButton.Icon.png"/>
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -150,7 +148,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="ColNews" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="22" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="News" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
+        <Button Grid.Column="0" x:Name="ColNews" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="22" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="News" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
             <Image Source="/img/NewsButton.Icon.png" Height="20" Width="19"/>
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -187,7 +185,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="ColSettings" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="22" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
+        <Button Grid.Column="0" x:Name="ColSettings" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="22" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Segoe UI Variable Text Light" Height="20" Visibility="Visible">
             <Image Source="/img/SettingsButton.Icon.png" Height="20" Width="19"/>
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -226,7 +224,7 @@
         </Button>
         <!--End collapsed NavButtons-->
         <!--NavButtons-->
-        <Button Name="HomeButton" Content="Home" HorizontalAlignment="Left" Margin="6,50,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Home" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
+        <Button Grid.Column="0" Name="HomeButton" Content="Home" HorizontalAlignment="Left" Margin="6,50,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Home" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -270,7 +268,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="ChangelogButton" Content="Changelog" HorizontalAlignment="Left" Margin="6,80,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Changelog" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
+        <Button Grid.Column="0" Name="ChangelogButton" Content="Changelog" HorizontalAlignment="Left" Margin="6,80,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Changelog" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -306,7 +304,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="BugsButton" Content="Bugs" HorizontalAlignment="Left" Margin="6,110,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Bugs" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
+        <Button Grid.Column="0" Name="BugsButton" Content="Bugs" HorizontalAlignment="Left" Margin="6,110,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Bugs" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -342,7 +340,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="NewsButton" Content="News" HorizontalAlignment="Left" Margin="6,140,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="News" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
+        <Button Grid.Column="0" x:Name="NewsButton" Content="News" HorizontalAlignment="Left" Margin="6,140,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="News" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -378,7 +376,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Margin="6,170,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1" Visibility="Visible">
+        <Button Grid.Column="0" x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Margin="6,170,0,0" VerticalAlignment="Top" Width="132" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="Settings" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1" Visibility="Visible">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -416,15 +414,15 @@
         </Button>
         <!--End NavButtons-->
         <!--NavButton Icons-->
-        <Image Name="HomeIcon" HorizontalAlignment="Left" Height="20" Margin="11,50,0,0" VerticalAlignment="Top" Width="21" Source="img/HomeButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="ChangelogIcon" HorizontalAlignment="Left" Height="20" Margin="11,80,0,0" VerticalAlignment="Top" Width="21" Source="img/ChangelogButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="BugsIcon" HorizontalAlignment="Left" Height="22" Margin="11,110,0,0" VerticalAlignment="Top" Width="20" Source="img/BugsButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="NewsIcon" HorizontalAlignment="Left" Height="18" Margin="12,141,0,0" VerticalAlignment="Top" Width="20" Source="img/NewsButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
-        <Image Name="SettingsIcon" HorizontalAlignment="Left" Height="18" Margin="12,171,0,0" VerticalAlignment="Top" Width="18" Source="img/SettingsButton.Icon.png" Opacity="1" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Grid.Column="0" Name="HomeIcon" HorizontalAlignment="Left" Height="20" Margin="11,50,0,0" VerticalAlignment="Top" Width="21" Source="img/HomeButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Grid.Column="0" Name="ChangelogIcon" HorizontalAlignment="Left" Height="20" Margin="11,80,0,0" VerticalAlignment="Top" Width="21" Source="img/ChangelogButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Grid.Column="0" Name="BugsIcon" HorizontalAlignment="Left" Height="22" Margin="11,110,0,0" VerticalAlignment="Top" Width="20" Source="img/BugsButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Grid.Column="0" Name="NewsIcon" HorizontalAlignment="Left" Height="18" Margin="12,141,0,0" VerticalAlignment="Top" Width="20" Source="img/NewsButton.Icon.png" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Grid.Column="0" Name="SettingsIcon" HorizontalAlignment="Left" Height="18" Margin="12,171,0,0" VerticalAlignment="Top" Width="18" Source="img/SettingsButton.Icon.png" Opacity="1" RenderOptions.BitmapScalingMode="Fant"/>
         <!--End NavButton Icons-->
         <!--End basic page layout-->
         <!--Page content-->
-        <Label x:Name="AGSLogo" Content="AGS" Grid.ColumnSpan="2" Margin="325,1,0,-1" FontSize="172" FontFamily="Segoe UI Variable Text Light" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <Label Grid.Column="0" x:Name="AgsLogo" Content="AGS" Grid.ColumnSpan="2" Margin="325,1,0,-1" FontSize="172" FontFamily="Segoe UI Variable Text Light" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="40" RenderingBias="Quality" Direction="0" ShadowDepth="1"/>
             </Label.Effect>
@@ -438,12 +436,12 @@
 
         <!--End page content-->
         <!--Page hosting frame-->
-        <Frame x:Name="pageHost" Content="" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden" Visibility="Visible" Margin="144,16,0,30"/>
+        <Frame Grid.Column="0" x:Name="PageHost" Content="" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden" Visibility="Visible" Margin="144,16,0,30"/>
         <!--End page hosting frame-->
         <!--Loading page animation-->
         <!--End loading page animation-->
         <!--!! Needs to be on top !! - Page management content-->
-        <Border BorderBrush="#FF121212" BorderThickness="100" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="800" MouseDown="DragBar" Grid.ColumnSpan="2"/>
+        <Border Grid.Column="0" BorderBrush="#FF121212" BorderThickness="100" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="800" MouseDown="DragBar" Grid.ColumnSpan="2"/>
         <Button Name="CloseButton" Content="r" Margin="0,1,4,0" VerticalAlignment="Top" Height="14" Click="Close" FontFamily="Marlett" Background="#FF24252B" BorderBrush="#FF24252B" Foreground="White" Padding="0,0,0,0" HorizontalAlignment="Right" Width="14" Grid.Column="1">
             <Button.Resources>
                 <Style TargetType="Border">
@@ -518,26 +516,26 @@
         </Button>
         <!--End page management content-->
         <!--Cutting edge branch notice-->
-        <Border Name="cuttingEdgeNoticeBlackout" BorderBrush="Black" BorderThickness="1" Background="#66000000" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden" MouseDown="DragBar"/>
-        <DockPanel Name="cuttingEdgeNotice" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden">
-            <Border BorderBrush="#FF191919" CornerRadius="8" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="202" Margin="254,23,0,0" VerticalAlignment="Top" Width="358" Background="#FF191919">
-                <Label x:Name="ceNotice" Content="NOTICE!" Foreground="#FFD0D0D0" HorizontalAlignment="Center" FontSize="48" Margin="0,0,0,134" FontFamily="Lib/Fonts/Bold/#Rubik"/>
+        <Border Grid.Column="0" Name="CuttingEdgeNoticeBlackout" BorderBrush="Black" BorderThickness="1" Background="#66000000" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden" MouseDown="DragBar"/>
+        <DockPanel Grid.Column="0" Name="CuttingEdgeNotice" Grid.ColumnSpan="2" Opacity="0" Visibility="Hidden">
+            <Border BorderBrush="#FF191919" CornerRadius="8" BorderThickness="1" HorizontalAlignment="Left" Height="202" Margin="254,23,0,0" VerticalAlignment="Top" Width="358" Background="#FF191919">
+                <Label x:Name="CNotice" Content="NOTICE!" Foreground="#FFD0D0D0" HorizontalAlignment="Center" FontSize="48" Margin="0,0,0,134" FontFamily="Lib/Fonts/Bold/#Rubik"/>
             </Border>
-            <Button x:Name="acceptCeNoticeButton" Content="Accept" HorizontalAlignment="Left" Margin="-85,187,0,0" VerticalAlignment="Top" Width="66" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="acceptCeNotice" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1" Visibility="Visible" Grid.Column="1">
+            <Button x:Name="AcceptCNoticeButton" Content="Accept" HorizontalAlignment="Left" Margin="-85,187,0,0" VerticalAlignment="Top" Width="66" BorderBrush="{x:Null}" Foreground="White" Background="#FF24252B" Click="AcceptCeNotice" FontFamily="Lib/Fonts/Light/#Rubik" Height="20" Opacity="1" Visibility="Visible">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="15"/>
                     </Style>
                 </Button.Resources>
                 <Button.Template>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Width="66" Height="20" CornerRadius="2" Background="{TemplateBinding Background}">
+                    <ControlTemplate TargetType="{x:Type TypeName=Button}">
+                        <Border Width="66" Height="20" CornerRadius="2" Background="{TemplateBinding Property=Background}">
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}">
+                    <Style TargetType="{x:Type TypeName=Button}">
                         <Setter Property="Background" Value="#FF8EBA8A"/>
                         <Setter Property="Cursor" Value="Hand"/>
                         <Style.Triggers>
@@ -559,7 +557,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock x:Name="ceNoticeDetails" TextWrapping="Wrap" Text="AveryGameLauncher2.cuttingEdge (Internally AveryGameLauncher2.Optimized) is in development. This means there WILL be several bugs involved. This program is without warranty. If you aren't a developer, go away." HorizontalAlignment="Center" TextAlignment="Center" Foreground="#FFBBBBBB" Margin="-300,100,248,270" Grid.ColumnSpan="2" FontSize="11" FontFamily="Lib/Fonts/Light/#Rotunda"/>
+            <TextBlock x:Name="CeNoticeDetails" TextWrapping="Wrap" Text="AveryGameLauncher2.cuttingEdge (Internally AveryGameLauncher2.Optimized) is in development. This means there WILL be several bugs involved. This program is without warranty. If you aren't a developer, go away." HorizontalAlignment="Center" TextAlignment="Center" Foreground="#FFBBBBBB" Margin="-300,100,248,270" FontSize="11" FontFamily="Lib/Fonts/Light/#Rotunda"/>
         </DockPanel>
         <!--End cutting edge branch notice-->
     </Grid>
